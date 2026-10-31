@@ -213,8 +213,7 @@ private final class MemoryRecords: RecordStore {
         XCTAssertEqual(SpritePlayback.frame(at: 0.86), 0)
     }
     func testSportsFontsAreAvailableOnDevice() {
-        XCTAssertNotNil(UIFont(name: "AvenirNextCondensed-Heavy", size: 32))
-        XCTAssertNotNil(UIFont(name: "Menlo-Bold", size: 24))
+        XCTAssertNotNil(UIFont(name: "HelveticaNeue-Bold", size: 32))
     }
     func testTouchStartingInsideNOWIsAcceptedAfterRenderedWindowCloses() {
         var clock = 1000.0

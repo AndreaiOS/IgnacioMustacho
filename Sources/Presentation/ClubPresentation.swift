@@ -1,21 +1,25 @@
 import SwiftUI
 
 enum ClubStyle {
-    static let cream = Color(red: 0.97, green: 0.94, blue: 0.84)
-    static let green = Color(red: 0.10, green: 0.25, blue: 0.20)
-    static let orange = Color(red: 0.94, green: 0.35, blue: 0.17)
-    static let gold = Color(red: 0.97, green: 0.76, blue: 0.35)
-    static let error = Color(red: 0.56, green: 0.16, blue: 0.10)
+    static let paper = Color(red: 0.97, green: 0.98, blue: 1.00)
+    static let navy = Color(red: 0.035, green: 0.075, blue: 0.16)
+    static let red = Color(red: 0.79, green: 0.09, blue: 0.17)
+    static let silver = Color(red: 0.74, green: 0.79, blue: 0.87)
+    static let ink = Color(red: 0.055, green: 0.065, blue: 0.085)
+    static let error = Color(red: 0.70, green: 0.04, blue: 0.12)
 }
 
 struct ClubStamp: View {
     let text: String
-    var color = ClubStyle.cream
+    var color = ClubStyle.paper
     var body: some View {
-        Text(text).font(SportsType.display(17, relativeTo: .caption)).tracking(1)
-            .padding(.horizontal, 12).padding(.vertical, 6)
-            .foregroundStyle(color).background(ClubStyle.green.opacity(0.94))
-            .overlay(Rectangle().strokeBorder(color.opacity(0.8), lineWidth: 1))
+        HStack(spacing: 8) {
+            Rectangle().fill(ClubStyle.red).frame(width: 3)
+            Text(text).font(.caption2.weight(.semibold)).tracking(0.8)
+        }
+        .fixedSize(horizontal: true, vertical: false).frame(height: 26)
+        .padding(.trailing, 10).foregroundStyle(color)
+        .background(ClubStyle.navy)
     }
 }
 
@@ -27,17 +31,12 @@ struct VictoryPaper: View {
         GeometryReader { geometry in
             let progress = min(1, max(0, age / GameModel.interludeDuration))
             ZStack {
-                Ellipse().fill(
-                    RadialGradient(
-                        colors: [ClubStyle.gold.opacity(0.25), .clear], center: .center, startRadius: 5, endRadius: 180)
-                ).frame(width: geometry.size.width, height: geometry.size.height * 0.8)
-                    .position(x: geometry.size.width / 2, y: geometry.size.height * 0.55)
                 if !reducedMotion {
                     ForEach(0..<12, id: \.self) { index in
                         let side = index.isMultiple(of: 2) ? -1.0 : 1.0
                         let spread = 0.12 + Double(index / 2) * 0.065
                         RoundedRectangle(cornerRadius: 1)
-                            .fill(index.isMultiple(of: 3) ? ClubStyle.orange : ClubStyle.gold)
+                            .fill(index.isMultiple(of: 3) ? ClubStyle.red : ClubStyle.silver)
                             .frame(width: 4, height: 9)
                             .rotationEffect(.degrees(Double(index * 29) + progress * side * 150))
                             .position(
@@ -59,29 +58,29 @@ struct SoundCheckView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    Text("LET THE ORGAN TALK.").font(SportsType.display(34))
+                    Text("Audio & commentary").font(SportsType.display(26))
                     Text("The coach is optional. The moustache is not.")
-                        .font(.subheadline).foregroundStyle(ClubStyle.cream.opacity(0.8))
+                        .font(.subheadline).foregroundStyle(ClubStyle.paper.opacity(0.8))
                     Toggle(isOn: $model.soundEnabled) {
                         Label("Game audio", systemImage: "speaker.wave.2.fill").font(.headline)
-                    }.accessibilityIdentifier("gameAudioToggle")
+                    }.tint(ClubStyle.red).accessibilityIdentifier("gameAudioToggle")
                     VStack(alignment: .leading, spacing: 10) {
                         Toggle(isOn: $model.voiceEnabled) {
                             Label("Spoken move calls", systemImage: "quote.bubble.fill").font(.headline)
-                        }.accessibilityIdentifier("voiceCallsToggle").disabled(!model.soundEnabled)
+                        }.tint(ClubStyle.red).accessibilityIdentifier("voiceCallsToggle").disabled(!model.soundEnabled)
                         Text("Keep the organ and effects. Let the move cards do the coaching.")
-                            .font(.caption).foregroundStyle(ClubStyle.cream.opacity(0.8))
+                            .font(.caption).foregroundStyle(ClubStyle.paper.opacity(0.8))
                     }
                     Text("Your choices stay on this iPhone. Silent mode still applies.")
-                        .font(.caption).foregroundStyle(ClubStyle.cream.opacity(0.65))
+                        .font(.caption).foregroundStyle(ClubStyle.paper.opacity(0.65))
                 }.padding(24)
             }
-            .background(ClubStyle.green).foregroundStyle(ClubStyle.cream)
+            .background(ClubStyle.navy).foregroundStyle(ClubStyle.paper)
             .navigationTitle("Sound check").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
-            .toolbarBackground(ClubStyle.green, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(ClubStyle.navy, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
-        }.tint(ClubStyle.orange)
+        }.tint(ClubStyle.paper)
     }
 }
 

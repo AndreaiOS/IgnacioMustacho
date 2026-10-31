@@ -4,46 +4,18 @@
       {
         "configurationName": "Test Scheme Action",
         "deviceName": "iPhone 18 Pro Max",
-        "exportedFileName": "ClubRecords.png",
-        "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "ClubRecords_0_5D8FD855-D043-4A46-825D-8C4C40C9280E.png",
-        "timestamp": 1793447759.003
-      }
-    ],
-    "testIdentifier": "IgnacioUITests/testClubRecordsShowLocalAwardsAndReturnHome()",
-    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testClubRecordsShowLocalAwardsAndReturnHome"
-  },
-  {
-    "attachments": [
-      {
-        "configurationName": "Test Scheme Action",
-        "deviceName": "iPhone 18 Pro Max",
-        "exportedFileName": "RecognizedInput.png",
-        "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "RecognizedInput_0_727CCDDC-8AF3-4F1F-AC5D-BCE2C3FE6CB0.png",
-        "timestamp": 1793447769.33
-      }
-    ],
-    "testIdentifier": "IgnacioUITests/testCourtRecognizesPhysicalSwipes()",
-    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testCourtRecognizesPhysicalSwipes"
-  },
-  {
-    "attachments": [
-      {
-        "configurationName": "Test Scheme Action",
-        "deviceName": "iPhone 18 Pro Max",
         "exportedFileName": "HowToPlayRhythm.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "HowToPlayRhythm_0_8C202A19-7712-40E5-9CD1-07203501CF08.png",
-        "timestamp": 1793447791.307
+        "suggestedHumanReadableName": "HowToPlayRhythm_0_F881AD50-1FFC-4EBD-BCB6-5783188D0360.png",
+        "timestamp": 1793450983.71
       },
       {
         "configurationName": "Test Scheme Action",
         "deviceName": "iPhone 18 Pro Max",
         "exportedFileName": "HowToPlay.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "HowToPlay_0_CC42C50D-4295-455D-8848-FCAC39C23DEB.png",
-        "timestamp": 1793447789.386
+        "suggestedHumanReadableName": "HowToPlay_0_7C9BF50E-1969-4CEC-AE81-70BEA6EC1B2A.png",
+        "timestamp": 1793450979.656
       }
     ],
     "testIdentifier": "IgnacioUITests/testGuideAndWarmUpNavigation()",
@@ -56,8 +28,8 @@
         "deviceName": "iPhone 18 Pro Max",
         "exportedFileName": "LaunchScreen.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "LaunchScreen_0_DF0B288B-6A32-4FDB-813F-356CAEF77D91.png",
-        "timestamp": 1793447803.647
+        "suggestedHumanReadableName": "LaunchScreen_0_BF8415A2-280A-44C7-87DA-40087887C2C4.png",
+        "timestamp": 1793451008
       }
     ],
     "testIdentifier": "IgnacioUITests/testLaunchArtworkLayout()",
@@ -68,10 +40,32 @@
       {
         "configurationName": "Test Scheme Action",
         "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "Gameplay.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Gameplay_0_071DC9C0-2B00-443D-A6F6-139C7DB1850F.png",
+        "timestamp": 1793451040.815
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "GameOver.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "GameOver_0_DA6FABEA-0BA7-4AB5-88FE-E1F50C435A2D.png",
+        "timestamp": 1793451039.782
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
         "exportedFileName": "MovementStudies.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "MovementStudies_0_468BCB82-F3C7-4690-B355-5274E75DE9CE.png",
-        "timestamp": 1793447838.861
+        "suggestedHumanReadableName": "MovementStudies_0_943E9B3A-5B45-4ECD-A22E-7A575BA884AC.png",
+        "timestamp": 1793451050.693
       }
     ],
     "testIdentifier": "IgnacioUITests/testMovementArtSheet()",
@@ -84,8 +78,8 @@
         "deviceName": "iPhone 18 Pro Max",
         "exportedFileName": "RewardAnimations.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "RewardAnimations_0_7B86DF88-152F-4FE7-9455-EBAB344B0229.png",
-        "timestamp": 1793447850.87
+        "suggestedHumanReadableName": "RewardAnimations_0_A594B647-F1A1-4716-9D00-FF079C7107CC.png",
+        "timestamp": 1793451068.882
       }
     ],
     "testIdentifier": "IgnacioUITests/testRewardAnimationSheet()",
@@ -96,10 +90,38 @@
       {
         "configurationName": "Test Scheme Action",
         "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "ClubRecords.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "ClubRecords_0_2AA69FE3-E5C6-431B-A268-9881F7902867.png",
+        "timestamp": 1793451158.451
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testClubRecordsShowLocalAwardsAndReturnHome()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testClubRecordsShowLocalAwardsAndReturnHome"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "RecognizedInput.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "RecognizedInput_0_D11D24CD-5C2E-48C3-A387-6DFB2C85288F.png",
+        "timestamp": 1793451170.43
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testCourtRecognizesPhysicalSwipes()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testCourtRecognizesPhysicalSwipes"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
         "exportedFileName": "SoundCheck.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "SoundCheck_0_14C851F4-A131-4F27-88D1-E3B4EA1A3F6D.png",
-        "timestamp": 1793447860.461
+        "suggestedHumanReadableName": "SoundCheck_0_EB6711D7-5E63-46F1-847F-92DD3CCBF83E.png",
+        "timestamp": 1793451181.471
       }
     ],
     "testIdentifier": "IgnacioUITests/testSoundCheckPersistsVoiceChoiceWithoutMutingGameAudio()",
@@ -110,51 +132,37 @@
       {
         "configurationName": "Test Scheme Action",
         "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "Pause.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Pause_0_05DB3F77-F430-4005-B3A6-E5D981A1CAF8.png",
+        "timestamp": 1793451205.919
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
         "exportedFileName": "TimingNow.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "TimingNow_0_3E810FBB-6A2A-4AA8-988C-9CEA1F2388D9.png",
-        "timestamp": 1793447879.301
+        "suggestedHumanReadableName": "TimingNow_0_D01CEA04-A665-44BF-A08E-4903F2DBF5E5.png",
+        "timestamp": 1793451205.32
       },
       {
         "configurationName": "Test Scheme Action",
         "deviceName": "iPhone 18 Pro Max",
         "exportedFileName": "TimingTutorial.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "TimingTutorial_0_3C9C7067-41A2-4DDD-BD45-BE6CB6F60590.png",
-        "timestamp": 1793447876.978
+        "suggestedHumanReadableName": "TimingTutorial_0_8C23D607-5B58-408C-B042-ED977E83A355.png",
+        "timestamp": 1793451203.044
       },
       {
         "configurationName": "Test Scheme Action",
         "deviceName": "iPhone 18 Pro Max",
         "exportedFileName": "Home.png",
         "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Home_0_5C348FE3-670F-4378-B7E2-A7561D7E2306.png",
-        "timestamp": 1793447875.346
+        "suggestedHumanReadableName": "Home_0_0A89CE89-A340-4F23-864D-5056E85E1EBC.png",
+        "timestamp": 1793451201.175
       }
     ],
     "testIdentifier": "IgnacioUITests/testTutorialPauseAndReturnHome()",
     "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testTutorialPauseAndReturnHome"
-  },
-  {
-    "attachments": [
-      {
-        "configurationName": "Test Scheme Action",
-        "deviceName": "iPhone 18 Pro Max",
-        "exportedFileName": "Gameplay.png",
-        "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "Gameplay_0_CC91546E-AD70-410A-928B-B6B5228DBAD1.png",
-        "timestamp": 1793449899.272
-      },
-      {
-        "configurationName": "Test Scheme Action",
-        "deviceName": "iPhone 18 Pro Max",
-        "exportedFileName": "GameOver.png",
-        "isAssociatedWithFailure": false,
-        "suggestedHumanReadableName": "GameOver_0_C5A08BD2-B4DC-41C8-8B48-C408C7C93F2C.png",
-        "timestamp": 1793449898.71
-      }
-    ],
-    "testIdentifier": "IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun()",
-    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun"
   }
 ]

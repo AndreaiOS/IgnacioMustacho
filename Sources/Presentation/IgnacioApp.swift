@@ -3,9 +3,11 @@ import SwiftUI
 
 enum SportsType {
     static func display(_ size: CGFloat, relativeTo style: Font.TextStyle = .title) -> Font {
-        .custom("AvenirNextCondensed-Heavy", size: size, relativeTo: style)
+        .custom("HelveticaNeue-Bold", size: size, relativeTo: style)
     }
-    static func score(_ size: CGFloat) -> Font { .custom("Menlo-Bold", size: size, relativeTo: .title) }
+    static func score(_ size: CGFloat) -> Font {
+        .custom("HelveticaNeue-Bold", size: size, relativeTo: .title).monospacedDigit()
+    }
 }
 
 @main struct IgnacioApp: App {
@@ -60,9 +62,9 @@ struct GameView: View {
     @State private var showGuide = false
     @State private var showSound = false
     private let timer = Timer.publish(every: 1.0 / 60, on: .main, in: .common).autoconnect()
-    private let cream = ClubStyle.cream
-    private let dark = ClubStyle.green
-    private let orange = ClubStyle.orange
+    private let paper = ClubStyle.paper
+    private let dark = ClubStyle.navy
+    private let red = ClubStyle.red
 
     var body: some View {
         GeometryReader { geometry in
@@ -101,29 +103,33 @@ struct GameView: View {
                         if model.screen == .playing && model.celebration == nil {
                             VStack(spacing: 3) {
                                 HStack(spacing: 8) {
+                                    if model.game.lastError != nil {
+                                        Image(systemName: "xmark.circle.fill")
+                                    } else if model.game.resolved {
+                                        Image(systemName: "checkmark.circle.fill")
+                                    }
                                     Text(model.feedback)
                                     if model.game.resolved && model.pointsEarned > 0 {
                                         Text("+\(model.pointsEarned)").monospacedDigit()
                                     }
-                                }.font(.system(.caption, design: .monospaced, weight: .bold))
+                                }.font(.system(.caption, design: .default, weight: .semibold))
                                     .foregroundStyle(model.game.lastError != nil ? ClubStyle.error : dark)
                                     .multilineTextAlignment(.center)
                                 Text(model.inputDetail).font(.system(size: 9, weight: .bold, design: .monospaced))
                                     .foregroundStyle(dark.opacity(0.75))
                             }.padding(.horizontal, 12).padding(.vertical, 7)
                                 .background(
-                                    model.game.resolved && model.game.lastJudgement == .perfect
-                                        ? ClubStyle.gold : cream, in: RoundedRectangle(cornerRadius: 4))
+                                    paper, in: RoundedRectangle(cornerRadius: 4))
                         }
                     }
                     .frame(maxHeight: .infinity)
                     .overlay(alignment: .topLeading) {
                         if model.screen == .home {
-                            ClubStamp(text: "SELF-APPOINTED MVP", color: ClubStyle.gold)
-                                .rotationEffect(.degrees(-4)).padding(.top, 8).allowsHitTesting(false)
+                            ClubStamp(text: "SELF-APPOINTED MVP", color: ClubStyle.silver)
+                                .padding(.top, 8).allowsHitTesting(false)
                         } else if model.screen == .results && model.isNewBest {
-                            ClubStamp(text: "PERSONAL BEST. OBVIOUSLY.", color: ClubStyle.gold)
-                                .rotationEffect(.degrees(-3)).padding(.top, 8).allowsHitTesting(false)
+                            ClubStamp(text: "PERSONAL BEST. OBVIOUSLY.", color: ClubStyle.silver)
+                                .padding(.top, 8).allowsHitTesting(false)
                         }
                     }
                     .overlay {
@@ -135,7 +141,7 @@ struct GameView: View {
                         VStack(spacing: 10) {
                             Text(celebration.quip).font(.headline).multilineTextAlignment(.center).fixedSize(
                                 horizontal: false, vertical: true)
-                            Text("APPLAUSE: PROVIDED BY IGNACIO").font(.caption.bold()).foregroundStyle(ClubStyle.gold)
+                            Text("Applause provided by Ignacio").font(.caption).foregroundStyle(ClubStyle.silver)
                             Text("Clock paused. You have time for this.").font(.caption)
                             Button("Keep playing") { model.skipInterlude() }.frame(minHeight: 44)
                         }.padding(18).frame(maxWidth: .infinity).background(dark, in: RoundedRectangle(cornerRadius: 8))
@@ -150,7 +156,7 @@ struct GameView: View {
                 .padding(.horizontal, 25).padding(.top, 10).padding(.bottom, 16)
                 if model.paused { pauseOverlay }
             }
-            .foregroundStyle(cream)
+            .foregroundStyle(paper)
             .contentShape(Rectangle())
 
         }
@@ -179,13 +185,13 @@ struct GameView: View {
     private var header: some View {
         HStack {
             if model.screen != .playing {
-                Image("ClubBadge").resizable().scaledToFit().frame(width: 30, height: 30)
-                    .clipShape(RoundedRectangle(cornerRadius: 7)).accessibilityHidden(true)
+                Text("IM").font(.system(size: 16, weight: .black))
+                    .frame(width: 32, height: 32).background(ClubStyle.red).accessibilityHidden(true)
             }
-            Text("IM / SHADOW CLUB").font(.system(.caption2, design: .monospaced, weight: .bold)).tracking(2)
+            Text("SHADOW BASKETBALL").font(.system(.caption2, weight: .semibold)).tracking(0.8)
             Spacer()
             if model.screen == .playing {
-                Text("\(model.game.score)").font(SportsType.score(24)).foregroundStyle(orange).monospacedDigit()
+                Text("\(model.game.score)").font(SportsType.score(28)).foregroundStyle(paper).monospacedDigit()
                     .accessibilityLabel("Score \(model.game.score)")
                 Button {
                     model.pause()
@@ -207,16 +213,18 @@ struct GameView: View {
         }.frame(minHeight: 28)
     }
     private var title: some View {
-        VStack(spacing: 3) {
-            Text(model.screen == .results ? (model.ending?.title ?? "TACTICAL EXIT.") : "IGNACIO\nMUSTACHO")
-                .font(SportsType.display(model.screen == .results ? 52 : 58))
-                .fontWidth(.condensed).shadow(color: .black.opacity(0.3), radius: 0, x: 2, y: 3)
-                .tracking(-2).lineSpacing(-9).multilineTextAlignment(.center).minimumScaleFactor(0.7)
-            Text("SHADOW BASKETBALLING").font(.system(.caption, design: .monospaced, weight: .bold)).tracking(2)
-                .foregroundStyle(orange)
-            Text("NO BALL. ALL SWAGGER.").font(SportsType.display(18, relativeTo: .subheadline)).tracking(1).padding(
-                .top, 5)
-        }.fixedSize(horizontal: false, vertical: true)
+        VStack(alignment: .leading, spacing: 8) {
+            Text(model.screen == .results ? "FINAL / SHADOW CLUB" : "PLAYER 00 / THE SHADOW CLUB")
+                .font(.caption2.weight(.semibold)).tracking(1.2).foregroundStyle(ClubStyle.silver)
+            Text(model.screen == .results ? (model.ending?.title ?? "TACTICAL EXIT.") : "Ignacio Mustacho")
+                .font(SportsType.display(model.screen == .results ? 32 : 38))
+                .tracking(-0.8).minimumScaleFactor(0.8)
+            if model.screen == .home {
+                Text("No ball. All swagger.").font(.subheadline).foregroundStyle(ClubStyle.silver)
+            }
+            Rectangle().fill(ClubStyle.red).frame(width: 44, height: 3).padding(.top, 4)
+        }.frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 12)
+            .fixedSize(horizontal: false, vertical: true)
     }
     private var command: some View {
         VStack(spacing: 9) {
@@ -228,17 +236,17 @@ struct GameView: View {
                 Spacer()
                 HStack(spacing: 5) {
                     ForEach(0..<3) { index in
-                        Image(systemName: index < model.game.lives ? "heart.fill" : "heart").foregroundStyle(orange)
+                        Image(systemName: index < model.game.lives ? "heart.fill" : "heart").foregroundStyle(red)
                     }
                 }.accessibilityLabel("\(model.game.lives) lives")
-            }.font(.system(.caption, design: .monospaced, weight: .bold))
-            VStack(spacing: 5) {
-                Text(model.game.move.rawValue.uppercased()).font(SportsType.display(34))
+            }.font(.system(.caption, design: .default, weight: .semibold))
+            VStack(alignment: .leading, spacing: 5) {
+                Text(model.game.move.rawValue.uppercased()).font(SportsType.display(28))
                     .minimumScaleFactor(0.65).lineLimit(1)
-                Text(model.game.move.hint).font(.system(.caption, design: .monospaced, weight: .bold)).tracking(2)
-            }.foregroundStyle(cream).frame(maxWidth: .infinity).padding(.vertical, 16)
+                Text(model.game.move.hint).font(.system(.caption, design: .default, weight: .semibold)).tracking(2)
+            }.foregroundStyle(paper).frame(maxWidth: .infinity, alignment: .leading).padding(16)
                 .background(dark, in: RoundedRectangle(cornerRadius: 6))
-                .overlay(RoundedRectangle(cornerRadius: 6).strokeBorder(cream.opacity(0.5), lineWidth: 1))
+                .overlay(alignment: .leading) { Rectangle().fill(red).frame(width: 3) }
         }
     }
     private var rhythmPanel: some View {
@@ -247,27 +255,27 @@ struct GameView: View {
                 Text("×\(model.game.combo) COMBO")
                 Spacer()
                 Text(model.game.tutorial ? "NO LIVES LOST" : "FEEL THE BEAT")
-            }.font(.system(.caption2, design: .monospaced, weight: .bold))
+            }.font(.system(.caption2, design: .default, weight: .semibold))
             GeometryReader { geo in
                 let travel = max(0, geo.size.width - 24)
                 let zone = model.game.timing.validZone
                 let ready = model.game.canAct(at: model.now)
-                let green = Color(red: 0.12, green: 0.48, blue: 0.29)
+                let zoneColor = ClubStyle.navy
                 ZStack(alignment: .leading) {
-                    Capsule().fill(orange.opacity(0.18)).frame(width: travel, height: 10).offset(x: 12)
-                    Rectangle().fill(green.opacity(ready ? 0.35 : 0.18))
-                        .overlay(Rectangle().strokeBorder(green, lineWidth: ready ? 3 : 2))
+                    Capsule().fill(dark.opacity(0.14)).frame(width: travel, height: 10).offset(x: 12)
+                    Rectangle().fill(zoneColor.opacity(ready ? 0.35 : 0.18))
+                        .overlay(Rectangle().strokeBorder(zoneColor, lineWidth: ready ? 3 : 2))
                         .frame(width: travel * (zone.upperBound - zone.lowerBound), height: 36)
                         .offset(x: 12 + travel * zone.lowerBound)
                         .accessibilityIdentifier("validTimingZone")
                     // Central beat is a guide; the entire outlined box accepts the gesture.
-                    Rectangle().fill(green.opacity(0.6)).frame(width: 2, height: 28)
+                    Rectangle().fill(zoneColor.opacity(0.6)).frame(width: 2, height: 28)
                         .offset(x: 11 + travel * model.game.timing.position(at: model.game.target))
                     Text("HIT ZONE").font(.system(size: 10, weight: .black, design: .monospaced))
-                        .foregroundStyle(green)
+                        .foregroundStyle(zoneColor)
                         .frame(width: travel * (zone.upperBound - zone.lowerBound))
                         .offset(x: 12 + travel * zone.lowerBound, y: -29)
-                    Circle().fill(cream).frame(width: 24, height: 24)
+                    Circle().fill(paper).frame(width: 24, height: 24)
                         .overlay(Circle().strokeBorder(dark, lineWidth: 3))
                         .overlay(Circle().fill(dark).frame(width: 6, height: 6))
                         .offset(x: travel * model.approach)
@@ -279,11 +287,11 @@ struct GameView: View {
                 .accessibilityValue(model.timingCue)
             Text(model.timingCue)
                 .font(SportsType.display(26, relativeTo: .headline))
-                .foregroundStyle(model.game.canAct(at: model.now) ? Color(red: 0.12, green: 0.48, blue: 0.29) : dark)
+                .foregroundStyle(dark)
                 .lineLimit(1).minimumScaleFactor(0.65)
                 .accessibilityIdentifier("timingCue")
             Text("START GESTURE WHEN DOT IS IN BOX")
-                .font(.system(.caption2, design: .monospaced, weight: .bold))
+                .font(.system(.caption2, design: .default, weight: .semibold))
                 .lineLimit(1).minimumScaleFactor(0.75)
             HStack(spacing: 4) {
                 moveButton("Tap", .dribble)
@@ -292,31 +300,31 @@ struct GameView: View {
                 moveButton("↑", .shoot)
             }
         }.padding(18).foregroundStyle(dark)
-            .background(cream, in: RoundedRectangle(cornerRadius: 8))
+            .background(paper, in: RoundedRectangle(cornerRadius: 8))
             .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(dark.opacity(0.25), lineWidth: 2))
     }
     private func moveButton(_ text: String, _ move: Move) -> some View {
         Button(text) { model.gesture(move) }.font(.caption.bold()).frame(maxWidth: .infinity).frame(height: 44)
-            .background(dark.opacity(0.07), in: Capsule()).accessibilityLabel(move.rawValue)
+            .background(dark.opacity(0.07), in: RoundedRectangle(cornerRadius: 3)).accessibilityLabel(move.rawValue)
     }
     private var homeControls: some View {
         VStack(spacing: 12) {
             primary("LET’S PLAY", identifier: "play") { model.firstPlay() }
-            Button("How to Play") { showGuide = true }.font(SportsType.display(23)).frame(minHeight: 44)
+            Button("How to Play") { showGuide = true }.font(.subheadline.weight(.semibold)).frame(minHeight: 44)
                 .accessibilityIdentifier("howToPlay")
             HStack {
                 Button("Tutorial") { model.play(tutorial: true) }.accessibilityIdentifier("tutorial")
                 Spacer()
                 Button("Club records ↗") { showLeaderboard = true }.accessibilityIdentifier("clubRecords")
             }.font(.subheadline.bold())
-            Text("PERSONAL BEST  /  \(model.best)").font(.system(.caption2, design: .monospaced, weight: .bold))
+            Text("PERSONAL BEST  /  \(model.best)").font(.system(.caption2, design: .default, weight: .semibold))
                 .tracking(2).padding(.top, 6)
         }.padding(15).background(dark.opacity(0.96), in: RoundedRectangle(cornerRadius: 8))
     }
     private var results: some View {
         VStack(spacing: 10) {
-            Text("OFFICIAL-ISH BOX SCORE").font(.system(.caption2, design: .monospaced, weight: .bold)).tracking(2)
-                .foregroundStyle(ClubStyle.gold)
+            Text("OFFICIAL-ISH BOX SCORE").font(.system(.caption2, design: .default, weight: .semibold)).tracking(2)
+                .foregroundStyle(ClubStyle.silver)
             Text("\(model.game.score)").font(SportsType.score(48))
                 .accessibilityIdentifier("finalScore")
             Text(model.ending?.quip ?? "The moustache remains undefeated.")
@@ -327,9 +335,9 @@ struct GameView: View {
                 Text("\(Int((60 / model.game.beatDuration).rounded())) BPM")
                 Spacer()
                 Text("HONOURS \(model.earnedMilestones.count)/6")
-            }.font(.system(.caption2, design: .monospaced, weight: .bold)).foregroundStyle(cream.opacity(0.85))
+            }.font(.system(.caption2, design: .default, weight: .semibold)).foregroundStyle(paper.opacity(0.85))
                 .padding(.vertical, 6)
-                .overlay(alignment: .top) { Rectangle().fill(cream.opacity(0.2)).frame(height: 1) }
+                .overlay(alignment: .top) { Rectangle().fill(paper.opacity(0.2)).frame(height: 1) }
             primary("PLAY AGAIN", identifier: "playAgain") { model.play() }
             Button("Back to club") { model.home() }.font(.subheadline.bold())
         }.padding(16).background(dark.opacity(0.96), in: RoundedRectangle(cornerRadius: 8))
@@ -338,27 +346,27 @@ struct GameView: View {
         Button(action: action) {
             HStack {
                 Spacer()
-                Text(title).tracking(2)
+                Text(title).tracking(0.6)
                 Spacer()
                 Image(systemName: "arrow.right")
             }
-            .font(SportsType.display(26, relativeTo: .headline)).padding(20).foregroundStyle(cream)
-            .background(orange, in: RoundedRectangle(cornerRadius: 12))
+            .font(SportsType.display(18, relativeTo: .headline)).padding(18).foregroundStyle(paper)
+            .background(red, in: RoundedRectangle(cornerRadius: 3))
         }.accessibilityIdentifier(identifier)
     }
     private var pauseOverlay: some View {
         ZStack {
             dark.opacity(0.88).ignoresSafeArea()
             VStack(spacing: 22) {
-                Text("TACTICAL HAIR BREAK.").font(SportsType.display(34)).foregroundStyle(cream).multilineTextAlignment(
+                Text("Tactical hair break.").font(SportsType.display(28)).foregroundStyle(paper).multilineTextAlignment(
                     .center)
                 Text("The crowd is holding its imaginary breath.").font(.subheadline).multilineTextAlignment(.center)
-                Button("Sound check") { showSound = true }.foregroundStyle(ClubStyle.gold)
+                Button("Sound check") { showSound = true }.foregroundStyle(ClubStyle.silver)
                 primary("RESUME", identifier: "resume") { model.resume() }
                 Button("Back to club") {
                     model.home()
                     model.paused = false
-                }.foregroundStyle(cream)
+                }.foregroundStyle(paper)
             }.padding(30)
         }
     }
@@ -373,29 +381,31 @@ struct LeaderboardView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    Text("TROPHY ROOM.\nPOPULATION: YOU.").font(SportsType.display(36))
+                    Text("Club records").font(SportsType.display(30))
+                    Text("Population: you.").font(.subheadline).foregroundStyle(ClubStyle.silver)
                     HStack(alignment: .firstTextBaseline) {
-                        Text("\(best)").font(SportsType.score(52)).foregroundStyle(ClubStyle.gold)
-                        Text("PERSONAL BEST").font(.system(.caption, design: .monospaced, weight: .bold))
+                        Text("\(best)").font(SportsType.score(52)).foregroundStyle(ClubStyle.silver)
+                        Text("PERSONAL BEST").font(.system(.caption, design: .default, weight: .semibold))
                     }
                     Text("No selection committee. Remarkable taste in winners.").font(.subheadline)
                     if let achievements { AchievementList(service: achievements) }
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("BEYOND THE CLUB").font(SportsType.display(24))
+                        Text("BEYOND THE CLUB").font(SportsType.display(18))
                         Text(service.status).font(.subheadline)
-                        Button("Connect Game Center") { service.show() }.buttonStyle(.borderedProminent)
+                        Button("Connect Game Center") { service.show() }.buttonStyle(.borderedProminent).tint(
+                            ClubStyle.red)
                         Button("Game Center awards") { service.show(state: .achievements) }.buttonStyle(.bordered)
                         Text("Club awards are saved on this iPhone and work offline.").font(.caption)
                     }.padding(18).frame(maxWidth: .infinity, alignment: .leading)
                         .background(.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 8))
                 }.padding(24)
             }
-            .background(ClubStyle.green).foregroundStyle(ClubStyle.cream)
+            .background(ClubStyle.navy).foregroundStyle(ClubStyle.paper)
             .navigationTitle("Club records").navigationBarTitleDisplayMode(.inline)
             .toolbar { Button("Done") { dismiss() } }
-            .toolbarBackground(ClubStyle.green, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(ClubStyle.navy, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
-        }.tint(ClubStyle.orange)
+        }.tint(ClubStyle.paper)
     }
 }
 
@@ -412,25 +422,25 @@ private struct AchievementList: View {
     @ObservedObject var service: AchievementService
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("LOCAL CLUB HONOURS").font(SportsType.display(24)).foregroundStyle(ClubStyle.gold)
+            Text("LOCAL CLUB HONOURS").font(SportsType.display(18)).foregroundStyle(ClubStyle.silver)
             ForEach(Milestone.standard) { award in
                 HStack(spacing: 14) {
                     ZStack {
                         Circle().strokeBorder(
-                            service.isEarned(award.threshold) ? ClubStyle.gold : ClubStyle.cream.opacity(0.25),
+                            service.isEarned(award.threshold) ? ClubStyle.silver : ClubStyle.paper.opacity(0.25),
                             lineWidth: 2)
                         Text("\(award.threshold)").font(SportsType.score(19))
                     }.frame(width: 56, height: 56).accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
-                            Text(award.title.uppercased()).font(SportsType.display(22, relativeTo: .headline))
+                            Text(award.title.uppercased()).font(SportsType.display(17, relativeTo: .headline))
                             Spacer(minLength: 4)
                             if service.isEarned(award.threshold) {
-                                Image(systemName: "checkmark.seal.fill").foregroundStyle(ClubStyle.gold)
+                                Image(systemName: "checkmark.seal.fill").foregroundStyle(ClubStyle.silver)
                             }
                         }
-                        Text(award.quip).font(.caption).foregroundStyle(ClubStyle.cream.opacity(0.85))
-                        ProgressView(value: service.percentComplete(award.threshold), total: 100).tint(ClubStyle.gold)
+                        Text(award.quip).font(.caption).foregroundStyle(ClubStyle.paper.opacity(0.85))
+                        ProgressView(value: service.percentComplete(award.threshold), total: 100).tint(ClubStyle.silver)
                             .accessibilityLabel("\(award.title), \(award.threshold) points")
                             .accessibilityValue("\(Int(service.percentComplete(award.threshold))) percent")
                         Text(
@@ -441,7 +451,7 @@ private struct AchievementList: View {
                     }
                 }.padding(14).background(.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 8))
             }
-            Text(service.status).font(.caption).foregroundStyle(ClubStyle.cream.opacity(0.7))
+            Text(service.status).font(.caption).foregroundStyle(ClubStyle.paper.opacity(0.7))
         }
     }
 }

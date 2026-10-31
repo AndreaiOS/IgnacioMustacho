@@ -3,9 +3,9 @@ import AppKit
 import ImageIO
 import UniformTypeIdentifiers
 
-let cream = NSColor(srgbRed: 0.97, green: 0.94, blue: 0.84, alpha: 1)
-let green = NSColor(srgbRed: 0.075, green: 0.19, blue: 0.15, alpha: 1)
-let orange = NSColor(srgbRed: 0.94, green: 0.35, blue: 0.17, alpha: 1)
+let paper = NSColor(srgbRed: 0.97, green: 0.98, blue: 1.00, alpha: 1)
+let navy = NSColor(srgbRed: 0.035, green: 0.075, blue: 0.16, alpha: 1)
+let red = NSColor(srgbRed: 0.79, green: 0.09, blue: 0.17, alpha: 1)
 let width = 1320
 let height = 2868
 let root = "AppStore/"
@@ -30,21 +30,21 @@ for (index, card) in cards.enumerated() {
     else { fatalError("Missing actual capture: \(card.1)") }
     NSGraphicsContext.saveGraphicsState()
     NSGraphicsContext.current = NSGraphicsContext(cgContext: canvas, flipped: false)
-    green.setFill(); NSBezierPath(rect: NSRect(x: 0, y: 0, width: width, height: height)).fill()
-    orange.setFill(); NSBezierPath(rect: NSRect(x: 82, y: height - 98, width: 54, height: 7)).fill()
-    text("IGNACIO MUSTACHO   /   SHADOW CLUB", x: 158, top: 67, size: 26, color: cream, face: "Menlo-Bold", maxWidth: 1080)
-    text(card.2, x: 82, top: 150, size: 116, color: cream, face: "AvenirNextCondensed-Heavy", maxWidth: 1156)
-    text(card.3, x: 86, top: 465, size: 36, color: cream.withAlphaComponent(0.85), face: "AvenirNext-Medium", maxWidth: 1150)
+    navy.setFill(); NSBezierPath(rect: NSRect(x: 0, y: 0, width: width, height: height)).fill()
+    red.setFill(); NSBezierPath(rect: NSRect(x: 82, y: height - 98, width: 54, height: 7)).fill()
+    text("IGNACIO MUSTACHO   /   SHADOW CLUB", x: 158, top: 67, size: 26, color: paper, face: "HelveticaNeue-Medium", maxWidth: 1080)
+    text(card.2, x: 82, top: 150, size: 94, color: paper, face: "HelveticaNeue-Bold", maxWidth: 1156)
+    text(card.3, x: 86, top: 430, size: 32, color: paper.withAlphaComponent(0.85), face: "HelveticaNeue", maxWidth: 1150)
     let screenWidth: CGFloat = 984
     let screenHeight = screenWidth * shot.size.height / shot.size.width
     let screenRect = NSRect(x: (CGFloat(width) - screenWidth) / 2, y: 132, width: screenWidth, height: screenHeight)
-    cream.withAlphaComponent(0.75).setFill()
-    NSBezierPath(roundedRect: screenRect.insetBy(dx: -3, dy: -3), xRadius: 38, yRadius: 38).fill()
+    paper.withAlphaComponent(0.75).setFill()
+    NSBezierPath(roundedRect: screenRect.insetBy(dx: -3, dy: -3), xRadius: 8, yRadius: 8).fill()
     NSGraphicsContext.saveGraphicsState()
-    NSBezierPath(roundedRect: screenRect, xRadius: 36, yRadius: 36).addClip()
+    NSBezierPath(roundedRect: screenRect, xRadius: 6, yRadius: 6).addClip()
     shot.draw(in: screenRect, from: .zero, operation: .sourceOver, fraction: 1, respectFlipped: false, hints: [.interpolation: NSImageInterpolation.high])
     NSGraphicsContext.restoreGraphicsState()
-    text("\(index + 1) / \(cards.count)", x: 1130, top: 2790, size: 24, color: cream.withAlphaComponent(0.65), face: "Menlo-Bold", maxWidth: 160)
+    text("\(index + 1) / \(cards.count)", x: 1130, top: 2790, size: 24, color: paper.withAlphaComponent(0.65), face: "HelveticaNeue-Medium", maxWidth: 160)
     NSGraphicsContext.restoreGraphicsState()
     guard let output = canvas.makeImage(), let destination = CGImageDestinationCreateWithURL(URL(fileURLWithPath: root + "Screenshots/" + card.0) as CFURL, UTType.png.identifier as CFString, 1, nil) else { fatalError("Cannot export") }
     CGImageDestinationAddImage(destination, output, nil)

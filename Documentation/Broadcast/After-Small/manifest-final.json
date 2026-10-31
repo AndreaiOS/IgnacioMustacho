@@ -1,0 +1,46 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "GestureRecognitionQA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "GestureRecognitionQA_0_133EAA0D-EB7E-421F-9F2F-65F68A76F915.png",
+        "timestamp": 1793451643.415
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testCourtRecognizesPhysicalSwipes()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testCourtRecognizesPhysicalSwipes"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Pause.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Pause_0_4CC8DC96-6E92-4897-8721-A3A31BA12CBB.png",
+        "timestamp": 1793451654.313
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "TimingNow.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "TimingNow_0_C3BDA5C5-A0C3-4C93-8C99-17F803AC0C16.png",
+        "timestamp": 1793451653.804
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Home.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Home_0_CC964D41-A4A4-4CE3-940D-0939AE9D2E18.png",
+        "timestamp": 1793451650.062
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testTutorialPauseAndReturnHome()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testTutorialPauseAndReturnHome"
+  }
+]

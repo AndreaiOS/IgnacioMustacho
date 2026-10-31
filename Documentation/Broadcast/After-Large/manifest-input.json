@@ -1,0 +1,46 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "GestureRecognitionQA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "GestureRecognitionQA_0_56C45576-AA8F-41FA-B087-23F24A852B58.png",
+        "timestamp": 1793451741.071
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testCourtRecognizesPhysicalSwipes()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testCourtRecognizesPhysicalSwipes"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "Pause.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Pause_0_4840845D-CECC-45B9-94E2-81B8A616C3A1.png",
+        "timestamp": 1793451755.15
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "TimingNow.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "TimingNow_0_7D684711-BEC7-4DBC-A24D-4E3F0C43FF4C.png",
+        "timestamp": 1793451753.537
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "Home.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Home_0_2D5306BE-6131-43E3-9770-DCAA8B15BB0C.png",
+        "timestamp": 1793451748.594
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testTutorialPauseAndReturnHome()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testTutorialPauseAndReturnHome"
+  }
+]

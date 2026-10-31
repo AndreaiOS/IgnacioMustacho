@@ -8,11 +8,14 @@ final class IgnacioUITests: XCTestCase {
         app.buttons["tutorial"].tap()
         XCTAssertTrue(app.staticTexts["WARM-UP 1/4"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["WAIT FOR THE BOX"].exists)
-        capture(app, "TimingTutorial")
-        XCTAssertTrue(app.staticTexts["NOW — TAP"].waitForExistence(timeout: 5))
+        // Screenshot export can outlast the first hit window on a busy simulator.
+        // Observe a live NOW cue before capturing, without requiring the first command.
+        let nowCue = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "NOW —")).firstMatch
+        XCTAssertTrue(nowCue.waitForExistence(timeout: 12))
         capture(app, "TimingNow")
         app.buttons["Pause"].tap()
         XCTAssertTrue(app.buttons["resume"].exists)
+        capture(app, "Pause")
         app.buttons["Back to club"].tap()
         XCTAssertTrue(app.buttons["play"].exists)
     }
@@ -32,8 +35,10 @@ final class IgnacioUITests: XCTestCase {
     }
     @MainActor func testCourtRecognizesPhysicalSwipes() {
         let app = XCUIApplication()
+        // Isolate physical recognition from real-time command transitions.
+        // Scoring and expired-command protection have separate clock-injected tests.
+        app.launchArguments = ["--pace-review"]
         app.launch()
-        app.buttons["tutorial"].tap()
         let court = app.otherElements["courtGestureSurface"]
         XCTAssertTrue(court.waitForExistence(timeout: 3))
         court.swipeUp()
@@ -44,7 +49,7 @@ final class IgnacioUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["YOU: BEHIND THE BACK"].exists)
         court.swipeRight()
         XCTAssertTrue(app.staticTexts["YOU: BEHIND THE BACK"].exists)
-        capture(app, "RecognizedInput")
+        capture(app, "GestureRecognitionQA")
     }
     @MainActor func testCourtRecognizesTapOnFreshCommand() {
         let app = XCUIApplication()

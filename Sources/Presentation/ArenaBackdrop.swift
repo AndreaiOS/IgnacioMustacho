@@ -8,11 +8,11 @@ struct VectorArenaBackdrop: View {
                 let w = size.width
                 let h = size.height
                 let horizon = h * 0.54
-                let ink = Color(red: 0.055, green: 0.105, blue: 0.12)
+                let ink = ClubStyle.ink
                 context.fill(
                     Path(CGRect(origin: .zero, size: size)),
                     with: .linearGradient(
-                        Gradient(colors: [ink, Color(red: 0.10, green: 0.22, blue: 0.23)]),
+                        Gradient(colors: [ink, ClubStyle.navy]),
                         startPoint: .zero, endPoint: .init(x: 0, y: horizon)))
                 func stroke(_ points: [CGPoint], color: Color, width: Double) {
                     var p = Path()
@@ -37,7 +37,7 @@ struct VectorArenaBackdrop: View {
                         let shade = (seat * 13 + row * 7) % 5
                         let color: Color =
                             shade == 0
-                            ? Color(red: 0.41, green: 0.34, blue: 0.25) : Color(red: 0.13, green: 0.24, blue: 0.24)
+                            ? Color(red: 0.41, green: 0.34, blue: 0.25) : ClubStyle.navy
                         context.fill(Path(ellipseIn: .init(x: x, y: y - 6, width: 6, height: 7)), with: .color(color))
                         context.fill(
                             Path(roundedRect: .init(x: x - 2, y: y, width: 10, height: 9), cornerRadius: 3),
@@ -99,7 +99,13 @@ struct ArenaBackdrop: View {
                     .frame(width: geometry.size.width, height: geometry.size.height).clipped()
                     .overlay(
                         LinearGradient(
-                            colors: [.black.opacity(0.38), .clear, .black.opacity(0.05)], startPoint: .top,
+                            stops: [
+                                .init(color: ClubStyle.navy.opacity(0.96), location: 0),
+                                .init(color: ClubStyle.navy.opacity(0.88), location: 0.33),
+                                .init(color: ClubStyle.navy.opacity(0.48), location: 0.57),
+                                .init(color: .black.opacity(0.15), location: 0.75),
+                                .init(color: ClubStyle.ink.opacity(0.70), location: 1),
+                            ], startPoint: .top,
                             endPoint: .bottom))
             } else {
                 VectorArenaBackdrop()

@@ -6,16 +6,16 @@ struct HowToPlayView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reducedMotion
     @Environment(\.dynamicTypeSize) private var typeSize
-    private let cream = Color(red: 0.97, green: 0.94, blue: 0.84)
-    private let green = Color(red: 0.10, green: 0.25, blue: 0.20)
-    private let orange = Color(red: 0.94, green: 0.35, blue: 0.17)
+    private let paper = ClubStyle.paper
+    private let navy = ClubStyle.navy
+    private let red = ClubStyle.red
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("FOUR MOVES.\nFIND YOUR RHYTHM.").font(SportsType.display(36))
+                        Text("Four moves. One rhythm.").font(SportsType.display(24))
                         Text("No ball. No scouts. An unreasonable amount of confidence.").font(.subheadline)
                     }
                     TimelineView(.animation(minimumInterval: 1.0 / 24, paused: reducedMotion)) { context in
@@ -30,18 +30,18 @@ struct HowToPlayView: View {
                         }
                     }
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("WAIT FOR NOW").font(SportsType.display(28))
+                        Text("WAIT FOR NOW").font(SportsType.display(24))
                         HStack(spacing: 0) {
-                            Capsule().fill(green.opacity(0.2)).frame(height: 8)
+                            Capsule().fill(navy.opacity(0.2)).frame(height: 8)
                             ZStack {
-                                Rectangle().fill(green.opacity(0.16)).frame(width: 98, height: 42)
-                                    .overlay(Rectangle().strokeBorder(green, lineWidth: 2))
-                                Circle().fill(cream).frame(width: 22, height: 22)
-                                    .overlay(Circle().strokeBorder(green, lineWidth: 3))
+                                Rectangle().fill(navy.opacity(0.16)).frame(width: 98, height: 42)
+                                    .overlay(Rectangle().strokeBorder(navy, lineWidth: 2))
+                                Circle().fill(paper).frame(width: 22, height: 22)
+                                    .overlay(Circle().strokeBorder(navy, lineWidth: 3))
                             }
-                            Capsule().fill(green.opacity(0.2)).frame(width: 28, height: 8)
+                            Capsule().fill(navy.opacity(0.2)).frame(width: 28, height: 8)
                         }.accessibilityHidden(true)
-                        Text("HIT ZONE  ·  NOW").font(.caption.bold()).foregroundStyle(green)
+                        Text("HIT ZONE  ·  NOW").font(.caption.bold()).foregroundStyle(navy)
                         Text(
                             "Listen to the call. Start your tap or swipe when the dot is inside the outlined hit zone and NOW appears. A short swipe is enough."
                         )
@@ -59,10 +59,10 @@ struct HowToPlayView: View {
                         Text("Warm-up lets you try all four moves without losing lives, then starts a game.").font(
                             .subheadline)
                     }.font(.subheadline).padding(18).background(
-                        .white.opacity(0.55), in: RoundedRectangle(cornerRadius: 8))
+                        .white, in: RoundedRectangle(cornerRadius: 4))
                 }.padding(20)
             }
-            .background(cream).foregroundStyle(green)
+            .background(paper).foregroundStyle(navy)
             .navigationTitle("How to Play").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
             .safeAreaInset(edge: .bottom) {
@@ -71,17 +71,17 @@ struct HowToPlayView: View {
                         dismiss()
                         play()
                     } label: {
-                        Text("LET’S PLAY").font(SportsType.display(25)).frame(maxWidth: .infinity).padding(12)
-                            .background(orange, in: RoundedRectangle(cornerRadius: 8)).foregroundStyle(cream)
+                        Text("LET’S PLAY").font(SportsType.display(18)).frame(maxWidth: .infinity).padding(12)
+                            .background(red, in: RoundedRectangle(cornerRadius: 4)).foregroundStyle(paper)
                     }.accessibilityIdentifier("guidePlay")
                     Button("Try the warm-up") {
                         dismiss()
                         practice()
                     }
                     .font(.subheadline.bold()).frame(minHeight: 44).accessibilityIdentifier("guidePractice")
-                }.padding(.horizontal, 20).padding(.top, 12).background(cream).foregroundStyle(green)
+                }.padding(.horizontal, 20).padding(.top, 12).background(paper).foregroundStyle(navy)
             }
-        }.tint(green)
+        }.tint(navy)
     }
 
     private func moveCard(_ move: Move, time: Double) -> some View {
@@ -90,12 +90,12 @@ struct HowToPlayView: View {
                 move: move, time: time, moveAge: time.truncatingRemainder(dividingBy: 1.7), reducedMotion: reducedMotion
             )
             .frame(height: 154).accessibilityHidden(true)
-            Text(move.rawValue.uppercased()).font(SportsType.display(21, relativeTo: .headline))
+            Text(move.rawValue.uppercased()).font(SportsType.display(16, relativeTo: .headline))
                 .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
             Text(gesture(move)).font(.subheadline.bold()).multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }.padding(10).frame(maxWidth: .infinity, minHeight: 252, alignment: .top)
-            .background(.white.opacity(0.55), in: RoundedRectangle(cornerRadius: 8))
+            .background(.white, in: RoundedRectangle(cornerRadius: 4))
             .accessibilityElement(children: .ignore).accessibilityLabel("\(move.rawValue). \(gesture(move))")
     }
 

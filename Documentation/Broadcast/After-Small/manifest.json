@@ -1,0 +1,144 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "ClubRecords.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "ClubRecords_0_DD2F55AF-4A39-4170-ACD7-9D2BDCDFCA8E.png",
+        "timestamp": 1793451251.815
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testClubRecordsShowLocalAwardsAndReturnHome()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testClubRecordsShowLocalAwardsAndReturnHome"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Pace320.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Pace320_0_472A290A-A079-4726-AFE4-2854E3D20477.png",
+        "timestamp": 1793451284.477
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testFastestPaceKeepsTimingCueAndControlsVisible()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testFastestPaceKeepsTimingCueAndControlsVisible"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "HowToPlayRhythm.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "HowToPlayRhythm_0_711244E3-65C8-461D-9B7B-AE41E6E03F5D.png",
+        "timestamp": 1793451295.611
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "HowToPlay.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "HowToPlay_0_244E78E1-99FA-4E2C-ADB6-8B9604B31EA9.png",
+        "timestamp": 1793451293.351
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testGuideAndWarmUpNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testGuideAndWarmUpNavigation"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "LaunchScreen.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "LaunchScreen_0_4B47BF0D-AB28-4B24-B646-004A3FA9238A.png",
+        "timestamp": 1793451308.444
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testLaunchArtworkLayout()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testLaunchArtworkLayout"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Gameplay.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Gameplay_0_C1867201-BD53-4BB8-9E4B-B8288A49DF59.png",
+        "timestamp": 1793451338.992
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "GameOver.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "GameOver_0_3A0051D5-43BF-4E97-BD0D-1C8636158BAC.png",
+        "timestamp": 1793451338.492
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "MovementStudies.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "MovementStudies_0_3AD80E16-AE9A-4A0D-BF9E-CA37A7634AF1.png",
+        "timestamp": 1793451344.623
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testMovementArtSheet()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMovementArtSheet"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Milestone10.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Milestone10_0_BE60EB2B-6FEA-49F8-9425-C9F22CEB2D5E.png",
+        "timestamp": 1793451350.039
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testProtectedMilestoneLayout()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testProtectedMilestoneLayout"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "RewardAnimations.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "RewardAnimations_0_BD4EC0D1-D9D8-430D-BDED-17ADF24787C5.png",
+        "timestamp": 1793451358.383
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testRewardAnimationSheet()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testRewardAnimationSheet"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "SoundCheck.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "SoundCheck_0_9A1C8A64-ED62-4D1B-8DDD-F105C5DBAEB3.png",
+        "timestamp": 1793451369.716
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testSoundCheckPersistsVoiceChoiceWithoutMutingGameAudio()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testSoundCheckPersistsVoiceChoiceWithoutMutingGameAudio"
+  }
+]
