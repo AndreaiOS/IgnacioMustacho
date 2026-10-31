@@ -73,6 +73,16 @@ struct SoundCheckView: View {
                     }
                     Text("Your choices stay on this iPhone. Silent mode still applies.")
                         .font(.caption).foregroundStyle(ClubStyle.paper.opacity(0.65))
+                    VStack(alignment: .leading, spacing: 4) {
+                        if let privacy = URL(string: "https://andreaios.github.io/IgnacioMustacho/privacy.html") {
+                            Link("Privacy policy", destination: privacy)
+                                .frame(minHeight: 44).accessibilityIdentifier("privacyPolicy")
+                        }
+                        if let support = URL(string: "mailto:an.murru@gmail.com?subject=Ignacio%20Mustacho%20support") {
+                            Link("Contact support", destination: support)
+                                .frame(minHeight: 44).accessibilityIdentifier("supportEmail")
+                        }
+                    }.font(.subheadline.weight(.semibold))
                 }.padding(24)
             }
             .background(ClubStyle.navy).foregroundStyle(ClubStyle.paper)

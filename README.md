@@ -2,6 +2,8 @@
 
 Prototipo iPhone nativo, giocabile offline. Ignacio è il fondatore immaginario dello Shadow Basketballing: fa mosse di basket **senza palla e senza canestro**. Personaggio raster con **12 fotogrammi distinti per ciascuna delle quattro mosse**, ispirato ai riferimenti canonici conservati in `Documentation/CharacterReferences`. Arena illustrata, tipografia sportiva e organo originale. Asset prodotti con lo strumento immagini integrato; nessun servizio esterno acquistato. È un’interpretazione illustrata, non una riproduzione fotografica.
 
+Preparazione pubblicazione: [passaggi del proprietario](AppStore/Publication/OWNER-STEPS.md), [scheda App Store](AppStore/Publication/STORE-LISTING.md), [Game Center](AppStore/GameCenter/SETUP.md). Verifica locale materiali: `python3 Scripts/verify_publication.py`.
+
 Ultimo aggiornamento e media: [ArenaUpdate](Documentation/ArenaUpdate.md).
 
 ## Avvio

@@ -1,0 +1,18 @@
+{
+  "status": "Ready to enter manually; not created on Apple",
+  "referenceName": "Shadow Club High Score v2",
+  "id": "ignacio.shadow.highscore.v2",
+  "type": "Classic",
+  "scoreFormat": "Integer",
+  "scoreSubmissionType": "Best Score",
+  "sortOrder": "High to Low",
+  "scoreRange": null,
+  "defaultLeaderboard": true,
+  "localization": {
+    "language": "en-GB",
+    "displayName": "Shadow Club High Scores",
+    "description": "Build your combo and finish a run with your highest score.",
+    "singularSuffix": " point",
+    "pluralSuffix": " points"
+  }
+}

@@ -1,3 +1,5 @@
+> Aggiornamento 31 ottobre 2026: archivio corrente e verifiche in [BUILD-STATUS](../AppStore/Publication/BUILD-STATUS.md); procedura completa in [OWNER-STEPS](../AppStore/Publication/OWNER-STEPS.md). Le informazioni sugli archivi precedenti qui sotto sono storiche.
+
 # iPhone, Game Center e archivio locale
 
 Stato verificato il 31 ottobre 2026. Nessun caricamento, creazione record o modifica account Apple eseguiti.

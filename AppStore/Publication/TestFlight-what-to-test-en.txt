@@ -1,0 +1,11 @@
+Please test on a real iPhone with iOS 17 or later:
+• Complete How to Play and the four-move warm-up.
+• Try tap, down swipe, left/right swipe and up swipe; compare touch timing with NOW and the organ.
+• Test normal play and long runs as pace increases. There are four beats per command, up to 320 BPM.
+• Reach milestone scores and check that celebrations do not cost time or lives.
+• Pause/resume and background/foreground during play and a celebration.
+• Verify Silent mode, volume/headphones, master audio and separate spoken move calls; reopen the app to check preferences persist.
+• Check the written ending, Play Again and personal best after relaunch.
+• Test Game Center sign-in, cancellation, leaderboard posting and achievement sync using configured test accounts. Compare the score in the Apple leaderboard to the run score.
+• Open Privacy policy and Contact support from Sound check. Check the web policy matches this build.
+Send device model, iOS version, app version and reproduction steps to an.murru@gmail.com. Remove personal information from screenshots.

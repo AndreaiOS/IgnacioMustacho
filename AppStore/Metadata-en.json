@@ -5,20 +5,31 @@
   "promotionalText": "Four moves. Three lives. One rising tempo. Find the hit zone, build your combo and chase your personal best in shadow basketball.",
   "keywords": "rhythm,basketball,arcade,timing,swipe,reflexes,sports,offline,score,challenge",
   "description": "Step into the shadow club with Ignacio Mustacho. No ball, no hoop: just four basketball moves and your sense of rhythm.\n\nListen to the call, watch the hit zone, and start your gesture when NOW appears. Tap to dribble, swipe down for Between the legs, swipe left or right for Behind the back, and swipe up to shoot.\n\nLEARN THE MOVES\nAn animated How to Play guide and a four-move warm-up help you get started without losing lives.\n\nFEEL THE PACE\nThe tempo rises every four commands. Land Perfect and Good moves, build your combo, and keep your three lives for as long as you can.\n\nCHASE YOUR BEST\nYour personal best stays on your iPhone. Play offline, pause when you need a breather, and jump straight into another run.\n\nEARN YOUR EGO\nReach 10, 23, 33, 50, 81 and 100 points in a run for six ridiculous club awards. Enjoy a brief victory lap with the clock paused, and a theatrical exit when your lives run out.\n\nKeep the organ and effects, or switch off spoken move calls in Sound check.\n\nOriginal organ cues, an arena atmosphere, and a moustache with a personality of its own. No ball. All swagger.",
-  "supportURL": null,
-  "privacyPolicyURL": null,
+  "supportURL": "https://andreaios.github.io/IgnacioMustacho/support.html",
+  "privacyPolicyURL": "https://andreaios.github.io/IgnacioMustacho/privacy.html",
   "marketingURL": null,
-  "copyrightOwner": null,
+  "copyrightOwner": "Andrea Murru",
   "bundleIdentifier": "com.ignaciomustacho.shadowbasketball",
   "bundleIdentifierStatus": "Selected locally after owner rejected prototype namespace; Apple registration and availability unverified",
   "gameCenterClaim": "Omitted from marketing until actual Apple configuration and end-to-end test are verified",
-  "appReviewNotesDraft": "Offline gameplay does not require sign-in. From Home, How to Play explains the four gestures. Tutorial starts four slower commands without life penalties, followed by a normal run. Game Center configuration status must be finalized before submission.",
+  "appReviewNotesDraft": "Ignacio Mustacho is a single-player rhythm game for iPhone, in English. No ball or hoop is used: the player performs four shadow-basketball moves.\n\nNo app account or sign-in is required for offline gameplay. On Home, How to Play explains the gestures. Tutorial starts four slower commands without life penalties, followed by a normal run. Start a gesture when NOW appears and the dot is inside the outlined hit zone. The buttons under the timing bar offer the same four actions.\n\nScores are 1 for Good and 2 for Perfect, with combo multipliers up to x3. The tempo increases every four commands, reaching 320 BPM at command 129. Milestones at 10, 23, 33, 50, 81 and 100 points pause the game clock for a brief celebration. The ending joke is text only; spoken move calls can be disabled separately in Sound check. Sound respects Silent mode.\n\nGame Center is optional. To access it, open Club records and select Connect Game Center. The app uses Apple's account interface, not a developer-operated account. Run scores are submitted when authenticated. Award progress is stored locally and retried when authenticated; local awards may sync on connection. The local game remains available offline. Leaderboard and achievement identifiers are listed in the accompanying Game Center setup package.\n\nSupport and Privacy policy links are available in Sound check from Home or Pause. There are no ads, in-app purchases or subscriptions.",
   "ownerRequired": [
-    "Confirm final display name",
-    "Provide working support and privacy policy URLs",
-    "Provide copyright holder and App Review contact details",
-    "Confirm commercial rights to character references and all assets",
-    "Review privacy declarations, age rating questionnaire, export compliance, distribution territories and pricing",
-    "Confirm Game Center leaderboard configuration and test score submission before advertising it"
-  ]
+    "Activate GitHub Pages from main /docs and verify support/privacy URLs",
+    "Choose distribution territories",
+    "Provide review contact telephone number privately in App Store Connect",
+    "Confirm rights to supplied character/artwork",
+    "Review App Privacy, age-rating and export-compliance answers",
+    "Verify Apple app record, Game Center configuration and online testing",
+    "Validate distribution signing and select an unused build number before upload"
+  ],
+  "websiteStatus": "Prepared in docs; GitHub Pages activation and public URL checks pending",
+  "copyright": "2026 Andrea Murru",
+  "price": "Free",
+  "territories": null,
+  "reviewContact": {
+    "firstName": "Andrea",
+    "lastName": "Murru",
+    "email": "an.murru@gmail.com",
+    "phone": null
+  }
 }

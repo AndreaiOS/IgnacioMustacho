@@ -1,6 +1,8 @@
 # Ignacio Mustacho — App Store visual package
 
-Prepared locally on 31 October 2026. Nothing has been uploaded or published. All English copy describes implemented gameplay; online leaderboard availability is deliberately omitted until tested against the actual Apple configuration.
+Prepared on 31 October 2026. No Apple upload or submission has been performed. GitHub Pages activation is pending. All English copy describes implemented gameplay; online leaderboard availability is deliberately omitted until tested against the actual Apple configuration.
+
+Start with [owner steps](Publication/OWNER-STEPS.md), [store listing](Publication/STORE-LISTING.md), [Game Center setup](GameCenter/SETUP.md) and [current build status](Publication/BUILD-STATUS.md). Public support/privacy pages are in `../docs/`; contact: Andrea Murru, an.murru@gmail.com. Price confirmed: Free.
 
 ## Deliverables
 
@@ -37,6 +39,6 @@ Screenshots now use the broadcast visual revision: navy, athletic red and white,
 
 ## Still required from the owner / Apple
 
-Confirm final display name; provide working support/privacy URLs, copyright holder and review contact; confirm commercial rights to supplied character references/assets. Review privacy and age-rating answers against the final app, including optional Game Center. No invented URLs, account records or rights declarations are included. Pricing, territories, distribution signature validation and eventual upload remain separate decisions.
+Activate the prepared support/privacy site, choose territories, supply the private App Review phone number and confirm asset rights. Review privacy and age-rating answers, configure and test Game Center, then validate distribution signing and upload through Apple. Follow `Publication/OWNER-STEPS.md`.
 
 See `Documentation/Device-Release.md` for the verified local team/device/build state and the distinction between GameKit code, Apple service configuration and TestFlight distribution.

@@ -1,0 +1,24 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "SupportAndPrivacy.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "SupportAndPrivacy_0_126CBE8C-BF47-49B4-870F-2EAC784F4828.png",
+        "timestamp": 1793453170.778
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "SoundCheck.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "SoundCheck_0_2840433E-DABA-4832-811F-9AEE09E97670.png",
+        "timestamp": 1793453168.472
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testSoundCheckPersistsVoiceChoiceWithoutMutingGameAudio()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testSoundCheckPersistsVoiceChoiceWithoutMutingGameAudio"
+  }
+]
