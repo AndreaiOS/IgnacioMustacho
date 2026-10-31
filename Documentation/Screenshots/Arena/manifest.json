@@ -1,0 +1,68 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Gameplay.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Gameplay_0_8EE885B6-9530-4871-B5BB-F2FBC5851FBB.png",
+        "timestamp": 1793441064.234
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "GameOver.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "GameOver_0_84294DD4-05E1-4E38-AE86-96B3B5459E41.png",
+        "timestamp": 1793441063.743
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "MovementStudies.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "MovementStudies_0_CDF44848-0CB4-4A54-B28E-30A9F8897C2B.png",
+        "timestamp": 1793441070.385
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testMovementArtSheet()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMovementArtSheet"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "TimingNow.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "TimingNow_0_DB690579-7EAB-4076-91F3-D5376A538747.png",
+        "timestamp": 1793441079.963
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "TimingTutorial.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "TimingTutorial_0_198058DE-10D9-48ED-9955-05AB3BB525FF.png",
+        "timestamp": 1793441077.764
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Home.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Home_0_825C90A6-284D-487D-977C-0809CA4CDC1C.png",
+        "timestamp": 1793441076.161
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testTutorialPauseAndReturnHome()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testTutorialPauseAndReturnHome"
+  }
+]

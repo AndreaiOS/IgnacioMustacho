@@ -1,0 +1,80 @@
+{
+  "status": "Local preparation only; no Apple records created or online reports verified",
+  "language": "en-GB",
+  "bundleIdentifier": "com.ignaciomustacho.shadowbasketball",
+  "leaderboardIdentifier": "ignacio.shadow.highscore.v2",
+  "achievements": [
+    {
+      "id": "ignacio.shadow.points10.v2",
+      "referenceName": "10 points - Tiny Flex",
+      "displayName": "Tiny Flex",
+      "inGameThreshold": 10,
+      "preEarnedDescription": "Reach 10 points in a single run.",
+      "earnedDescription": "Ten points. The sleeve never stood a chance.",
+      "gameCenterPointValue": 10,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "image": "award-10.png"
+    },
+    {
+      "id": "ignacio.shadow.points23.v2",
+      "referenceName": "23 points - MJ-ish",
+      "displayName": "MJ-ish",
+      "inGameThreshold": 23,
+      "preEarnedDescription": "Reach 23 points in a single run.",
+      "earnedDescription": "Same number. Slightly different career.",
+      "gameCenterPointValue": 10,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "image": "award-23.png"
+    },
+    {
+      "id": "ignacio.shadow.points33.v2",
+      "referenceName": "33 points - Bench Legend",
+      "displayName": "Bench Legend",
+      "inGameThreshold": 33,
+      "preEarnedDescription": "Reach 33 points in a single run.",
+      "earnedDescription": "Still undefeated. Mostly unselected.",
+      "gameCenterPointValue": 10,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "image": "award-33.png"
+    },
+    {
+      "id": "ignacio.shadow.points50.v2",
+      "referenceName": "50 points - Self-Applause",
+      "displayName": "Self-Applause",
+      "inGameThreshold": 50,
+      "preEarnedDescription": "Reach 50 points in a single run.",
+      "earnedDescription": "Someone had to start the applause.",
+      "gameCenterPointValue": 10,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "image": "award-50.png"
+    },
+    {
+      "id": "ignacio.shadow.points81.v2",
+      "referenceName": "81 points - Imaginary MVP",
+      "displayName": "Imaginary MVP",
+      "inGameThreshold": 81,
+      "preEarnedDescription": "Reach 81 points in a single run.",
+      "earnedDescription": "The crowd in my head is going wild.",
+      "gameCenterPointValue": 10,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "image": "award-81.png"
+    },
+    {
+      "id": "ignacio.shadow.points100.v2",
+      "referenceName": "100 points - Hall of Me",
+      "displayName": "Hall of Me",
+      "inGameThreshold": 100,
+      "preEarnedDescription": "Reach 100 points in a single run.",
+      "earnedDescription": "I would like to thank my moustache.",
+      "gameCenterPointValue": 10,
+      "hidden": false,
+      "achievableMoreThanOnce": false,
+      "image": "award-100.png"
+    }
+  ]
+}

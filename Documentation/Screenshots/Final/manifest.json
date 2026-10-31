@@ -1,0 +1,104 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "RecognizedInput.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "RecognizedInput_0_6920F8B2-9D2C-4C81-8749-C9C48482A88E.png",
+        "timestamp": 1793442679.86
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testCourtRecognizesPhysicalSwipes()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testCourtRecognizesPhysicalSwipes"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "HowToPlayRhythm.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "HowToPlayRhythm_0_350935DF-0D54-453C-9512-816857686C0F.png",
+        "timestamp": 1793442696.524
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "HowToPlay.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "HowToPlay_0_8CB3E8D2-0011-42CC-B38F-07E98EB1B927.png",
+        "timestamp": 1793442694.896
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testGuideAndWarmUpNavigation()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testGuideAndWarmUpNavigation"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Gameplay.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Gameplay_0_05410787-46A7-4264-B5AF-B547F14AD6AE.png",
+        "timestamp": 1793442731.958
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "GameOver.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "GameOver_0_BDED7132-94C4-42D0-9DEA-4B7234DD2528.png",
+        "timestamp": 1793442731.428
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "MovementStudies.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "MovementStudies_0_206FC093-E1A0-4491-BCD9-A429880FF160.png",
+        "timestamp": 1793442737.808
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testMovementArtSheet()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMovementArtSheet"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "TimingNow.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "TimingNow_0_651B34B3-1CFA-4360-A2FD-F5626F02E5D1.png",
+        "timestamp": 1793442747.344
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "TimingTutorial.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "TimingTutorial_0_9A88CECE-4C3D-4059-9A29-EF39C909EBD1.png",
+        "timestamp": 1793442745.055
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Home.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Home_0_BA47E333-DA82-4DF1-A8BA-48D00BA65A30.png",
+        "timestamp": 1793442743.463
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testTutorialPauseAndReturnHome()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testTutorialPauseAndReturnHome"
+  }
+]

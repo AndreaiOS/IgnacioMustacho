@@ -1,0 +1,17 @@
+// Device signing is optional for simulator builds and stays local to this Mac.
+#include? "LocalSigning.xcconfig"
+// Coherent app namespace selected after owner rejected the prototype identifier.
+// Apple registration/availability still requires verification.
+PRODUCT_BUNDLE_IDENTIFIER = com.ignaciomustacho.shadowbasketball
+MARKETING_VERSION = 1.0
+CURRENT_PROJECT_VERSION = 1
+// Must match the actual classic leaderboard in App Store Connect.
+IGNACIO_LEADERBOARD_ID = ignacio.shadow.highscore.v2
+
+// Proposed local IDs; create matching achievements in App Store Connect.
+IGNACIO_ACHIEVEMENT_10 = ignacio.shadow.points10.v2
+IGNACIO_ACHIEVEMENT_23 = ignacio.shadow.points23.v2
+IGNACIO_ACHIEVEMENT_33 = ignacio.shadow.points33.v2
+IGNACIO_ACHIEVEMENT_50 = ignacio.shadow.points50.v2
+IGNACIO_ACHIEVEMENT_81 = ignacio.shadow.points81.v2
+IGNACIO_ACHIEVEMENT_100 = ignacio.shadow.points100.v2

@@ -1,0 +1,24 @@
+{
+  "language": "en-GB",
+  "name": "Ignacio Mustacho",
+  "subtitle": "No ball. All rhythm.",
+  "promotionalText": "Four moves. Three lives. One rising tempo. Find the hit zone, build your combo and chase your personal best in shadow basketball.",
+  "keywords": "rhythm,basketball,arcade,timing,swipe,reflexes,sports,offline,score,challenge",
+  "description": "Step into the shadow club with Ignacio Mustacho. No ball, no hoop: just four basketball moves and your sense of rhythm.\n\nListen to the call, watch the hit zone, and start your gesture when NOW appears. Tap to dribble, swipe down for Between the legs, swipe left or right for Behind the back, and swipe up to shoot.\n\nLEARN THE MOVES\nAn animated How to Play guide and a four-move warm-up help you get started without losing lives.\n\nFEEL THE PACE\nThe tempo rises every four commands. Land Perfect and Good moves, build your combo, and keep your three lives for as long as you can.\n\nCHASE YOUR BEST\nYour personal best stays on your iPhone. Play offline, pause when you need a breather, and jump straight into another run.\n\nEARN YOUR EGO\nReach 10, 23, 33, 50, 81 and 100 points in a run for six ridiculous club awards. Enjoy a brief victory lap with the clock paused, and a theatrical exit when your lives run out.\n\nOriginal organ cues, an arena atmosphere, and a moustache with a personality of its own. No ball. All swagger.",
+  "supportURL": null,
+  "privacyPolicyURL": null,
+  "marketingURL": null,
+  "copyrightOwner": null,
+  "bundleIdentifier": "com.ignaciomustacho.shadowbasketball",
+  "bundleIdentifierStatus": "Selected locally after owner rejected prototype namespace; Apple registration and availability unverified",
+  "gameCenterClaim": "Omitted from marketing until actual Apple configuration and end-to-end test are verified",
+  "appReviewNotesDraft": "Offline gameplay does not require sign-in. From Home, How to Play explains the four gestures. Tutorial starts four slower commands without life penalties, followed by a normal run. Game Center configuration status must be finalized before submission.",
+  "ownerRequired": [
+    "Confirm final display name",
+    "Provide working support and privacy policy URLs",
+    "Provide copyright holder and App Review contact details",
+    "Confirm commercial rights to character references and all assets",
+    "Review privacy declarations, age rating questionnaire, export compliance, distribution territories and pricing",
+    "Confirm Game Center leaderboard configuration and test score submission before advertising it"
+  ]
+}
