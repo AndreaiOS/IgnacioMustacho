@@ -9,6 +9,13 @@ let red = NSColor(srgbRed: 0.79, green: 0.09, blue: 0.17, alpha: 1)
 let width = 1320
 let height = 2868
 let root = "AppStore/"
+// Optional output dimensions and folder; retain the design's aspect ratio.
+let arguments = CommandLine.arguments
+let outputWidth = arguments.count > 1 ? Int(arguments[1]) ?? width : width
+let outputHeight = arguments.count > 2 ? Int(arguments[2]) ?? height : height
+let outputFolder = arguments.count > 3 ? arguments[3] : root + "Screenshots"
+precondition(outputWidth > 0 && outputHeight > 0)
+try FileManager.default.createDirectory(atPath: outputFolder, withIntermediateDirectories: true)
 let cards = [
     ("01-Shadow-Basketball.png", "Home.png", "NO BALL.\nALL SWAGGER.", "Shadow basketball. Real rhythm."),
     ("02-Hit-The-Zone.png", "TimingNow.png", "FOUR MOVES.\nONE BEAT.", "Tap. Swipe. Hit the zone."),
@@ -24,10 +31,16 @@ func text(_ value: String, x: CGFloat, top: CGFloat, size: CGFloat, color: NSCol
     (value as NSString).draw(in: NSRect(x: x, y: CGFloat(height) - top - rect.height, width: maxWidth, height: rect.height + 4), withAttributes: attributes)
 }
 for (index, card) in cards.enumerated() {
-    guard let canvas = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: width * 4,
+    guard let canvas = CGContext(data: nil, width: outputWidth, height: outputHeight, bitsPerComponent: 8, bytesPerRow: outputWidth * 4,
         space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue),
         let shot = NSImage(contentsOfFile: root + "RawScreenshots/" + card.1)
     else { fatalError("Missing actual capture: \(card.1)") }
+    canvas.setFillColor(navy.cgColor)
+    canvas.fill(CGRect(x: 0, y: 0, width: outputWidth, height: outputHeight))
+    let scale = min(CGFloat(outputWidth) / CGFloat(width), CGFloat(outputHeight) / CGFloat(height))
+    canvas.translateBy(x: (CGFloat(outputWidth) - CGFloat(width) * scale) / 2,
+                       y: (CGFloat(outputHeight) - CGFloat(height) * scale) / 2)
+    canvas.scaleBy(x: scale, y: scale)
     NSGraphicsContext.saveGraphicsState()
     NSGraphicsContext.current = NSGraphicsContext(cgContext: canvas, flipped: false)
     navy.setFill(); NSBezierPath(rect: NSRect(x: 0, y: 0, width: width, height: height)).fill()
@@ -46,7 +59,7 @@ for (index, card) in cards.enumerated() {
     NSGraphicsContext.restoreGraphicsState()
     text("\(index + 1) / \(cards.count)", x: 1130, top: 2790, size: 24, color: paper.withAlphaComponent(0.65), face: "HelveticaNeue-Medium", maxWidth: 160)
     NSGraphicsContext.restoreGraphicsState()
-    guard let output = canvas.makeImage(), let destination = CGImageDestinationCreateWithURL(URL(fileURLWithPath: root + "Screenshots/" + card.0) as CFURL, UTType.png.identifier as CFString, 1, nil) else { fatalError("Cannot export") }
+    guard let output = canvas.makeImage(), let destination = CGImageDestinationCreateWithURL(URL(fileURLWithPath: outputFolder + "/" + card.0) as CFURL, UTType.png.identifier as CFString, 1, nil) else { fatalError("Cannot export") }
     CGImageDestinationAddImage(destination, output, nil)
     guard CGImageDestinationFinalize(destination) else { fatalError("Cannot save") }
 }

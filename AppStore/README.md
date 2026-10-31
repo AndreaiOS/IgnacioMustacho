@@ -1,5 +1,7 @@
 # Ignacio Mustacho — App Store visual package
 
+Aggiornamento screenshot: usare i quattro PNG `AppStore/Screenshots/Dynamic-Island-Medium-1206x2622/` nel riquadro Dynamic Island medio. Disponibili anche grande 1320×2868 e Face ID grande 1242×2688. Vedere `AppStore/Screenshots/README.md` per la corrispondenza esatta.
+
 Prepared on 31 October 2026. No Apple upload or submission has been performed. GitHub Pages activation is pending. All English copy describes implemented gameplay; online leaderboard availability is deliberately omitted until tested against the actual Apple configuration.
 
 Start with [owner steps](Publication/OWNER-STEPS.md), [store listing](Publication/STORE-LISTING.md), [Game Center setup](GameCenter/SETUP.md) and [current build status](Publication/BUILD-STATUS.md). Public support/privacy pages are in `../docs/`; contact: Andrea Murru, an.murru@gmail.com. Price confirmed: Free.

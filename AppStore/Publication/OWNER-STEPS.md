@@ -1,5 +1,7 @@
 # Ignacio Mustacho — cosa resta al proprietario
 
+Aggiornamento screenshot: usare i quattro PNG `AppStore/Screenshots/Dynamic-Island-Medium-1206x2622/` nel riquadro Dynamic Island medio. Disponibili anche grande 1320×2868 e Face ID grande 1242×2688. Vedere `AppStore/Screenshots/README.md` per la corrispondenza esatta.
+
 Preparazione del 31 ottobre 2026. Nome pubblico: Andrea Murru. Email pubblica: an.murru@gmail.com. Prezzo confermato: gratuito. App e testi inglesi; versione 1.0, build 1 da confrontare con eventuali caricamenti già presenti.
 
 ## 1. Mettere online supporto e privacy

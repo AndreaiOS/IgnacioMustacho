@@ -1,5 +1,7 @@
 # Scheda App Store — versione 1.0
 
+Aggiornamento screenshot: usare i quattro PNG `AppStore/Screenshots/Dynamic-Island-Medium-1206x2622/` nel riquadro Dynamic Island medio. Disponibili anche grande 1320×2868 e Face ID grande 1242×2688. Vedere `AppStore/Screenshots/README.md` per la corrispondenza esatta.
+
 Testi inglesi coerenti con l'interfaccia. Copie senza formattazione nei file `*-en.txt`; metadati strutturati in `../Metadata-en.json`. Non è una ricevuta di caricamento su Apple.
 
 | Campo | Valore preparato |

@@ -36,6 +36,11 @@ shots = list((root / 'AppStore/Screenshots').glob('*.png'))
 assert len(shots) == 4
 for shot in shots:
     png(shot, (1320, 2868))
+for folder, size in [('Dynamic-Island-Medium-1206x2622', (1206, 2622)), ('Face-ID-Large-1242x2688', (1242, 2688))]:
+    variants = list((root / 'AppStore/Screenshots' / folder).glob('*.png'))
+    assert len(variants) == 4, folder
+    for shot in variants:
+        png(shot, size)
 png(root / 'AppStore/Icons/AppIcon-1024.png', (1024, 1024))
 
 class LocalLinks(HTMLParser):
@@ -52,5 +57,5 @@ for filename in ['index.html', 'support.html', 'privacy.html']:
     LocalLinks().feed(body)
 assert metadata['supportURL'].endswith('/support.html')
 assert metadata['privacyPolicyURL'].endswith('/privacy.html')
-print('Verified: metadata limits, bundle/GC identifiers, 6 awards, 4 screenshots, icon, public contacts and local website links.')
+print('Verified: metadata limits, bundle/GC identifiers, 6 awards, 12 screenshots across 3 display sizes, icon, public contacts and local website links.')
 print('Still external: Pages activation/public HTTP checks, owner declarations, Apple records, Game Center online tests and distribution validation.')
