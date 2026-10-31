@@ -1,0 +1,52 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Pace320.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Pace320_0_B2C2522D-DC23-4411-B159-2050CCED407E.png",
+        "timestamp": 1793447943.158
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testFastestPaceKeepsTimingCueAndControlsVisible()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testFastestPaceKeepsTimingCueAndControlsVisible"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Gameplay.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Gameplay_0_992ECAD6-5C66-42F0-ABBE-6B30404BF06D.png",
+        "timestamp": 1793447972.126
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "GameOver.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "GameOver_0_EB4394E0-67D3-43B0-BB2D-1D3E13237D5E.png",
+        "timestamp": 1793447971.613
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "Milestone10.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Milestone10_0_68A628E6-D0DE-41EA-9D04-5C18C218BC66.png",
+        "timestamp": 1793447977.748
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testProtectedMilestoneLayout()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testProtectedMilestoneLayout"
+  }
+]

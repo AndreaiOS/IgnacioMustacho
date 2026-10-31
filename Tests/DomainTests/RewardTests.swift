@@ -61,3 +61,12 @@ import Testing
     #expect(game.lives == 3)
     #expect(!game.resolved)
 }
+
+@Test(arguments: [0, 10, 33, 81, 100])
+func repeatRunsVaryTheWrittenExcuseWithoutChangingTheEarnedEnding(score: Int) {
+    let first = GameEnding.forScore(score)
+    let alternatives = (0..<3).map { GameEnding.forScore(score, attempt: $0) }
+    #expect(Set(alternatives.map(\.quip)).count == 3)
+    #expect(alternatives.allSatisfy { $0.title == first.title && $0.reaction == first.reaction })
+    #expect(GameEnding.forScore(score, attempt: 3) == first)
+}

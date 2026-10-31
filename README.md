@@ -44,9 +44,21 @@ Il cartello e la voce inglese anticipano la mossa. Eseguire il gesto mentre il *
 
 Il primo Play della sessione propone quattro comandi lenti, uno per mossa, senza perdita di vite; poi inizia automaticamente la partita. Tutorial è ripetibile dalla Home. How to Play apre una guida facoltativa con le quattro mosse animate, gesti, hit zone e regole, con accesso diretto a Play o warm-up. Un errore di gesto, di tempo o un comando mancato costa una delle tre vite e azzera la combo. Nessun timer o limite di durata. Dopo tre errori: punteggio, record e Play Again.
 
-Perfect: entro ±180 ms nel tutorial, ±140 ms in partita, 2 punti. Good: entro **±500 ms nel tutorial**, **±400 ms nei primi otto comandi**, poi la tolleranza diminuisce di 20 ms per lato ogni otto comandi fino a **±280 ms** (dal comando 49), 1 punto. Sono finestre complessive di 1 secondo in allenamento e 800 ms all’inizio: lasciano tempo per leggere ed eseguire uno swipe, senza rallentare la musica. I bordi sono inclusi; una mancata risposta costa la vita solo dopo l’uscita dall’intera fascia. Moltiplicatore ×1, ×2 dalla combo 10 e ×3 dalla combo 20. Input molto anticipati, fuori dalla finestra di preparazione, sono ignorati; nella finestra di preparazione ma fuori dalla tolleranza sono Miss. Un comando può essere giudicato una sola volta.
+Perfect: entro ±180 ms nel tutorial, fino a ±140 ms in partita, 2 punti. Good: entro ±500 ms nel tutorial e ±400 ms nei primi otto comandi, 1 punto. La mezza finestra normale è il minimo fra `max(0.28, 0.4 - (index / 8) * 0.02)` e l’85% di un beat; Perfect è il minimo fra 140 ms e metà della finestra Good. Al limite finale: Good ±159 ms, Perfect ±80 ms. I bordi sono inclusi; il riconoscimento conserva il timestamp iniziale del contatto e concede fino a 450 ms per completare uno swipe iniziato nella fascia valida. Moltiplicatore ×1, ×2 dalla combo 10 e ×3 dalla combo 20. Un comando viene giudicato una sola volta.
 
-Un comando ogni quattro beat. Si parte da 100 BPM, con accelerazione ogni quattro comandi (velocità massima dal comando 17, circa 34 secondi) fino a circa 167 BPM. Quattro note ascendenti di organo accompagnano il countdown; una cadenza originale chiude la partita. WAV generati localmente e voce sintetizzata sul dispositivo. Audio ambient rispetta la modalità silenziosa. Il pulsante audio è in Home; la voce inglese disponibile sul dispositivo può differire. In background il gioco si mette in pausa senza consumare vite; Resume conserva il tempo relativo al bersaglio.
+Un comando ogni quattro beat. Tutorial invariato (circa 71 BPM); i primi quattro comandi della partita sono a 100 BPM. Ogni quattro comandi si passa a 120, 140, 160 e 180 BPM, poi si aggiungono 5 BPM ogni quattro comandi fino a 320 BPM dal comando 129 (PACE 33). La difficoltà dipende dai comandi, non dal punteggio o dalla combo. Il limite tecnico evita richieste impossibili: non c’è un plateau precoce al comando 17. Ritardo di riconoscimento o frame molto lento possono estendere il countdown seguente per lasciare almeno tre beat di preavviso; dopo una celebrazione si riparte sempre con quattro beat interi.
+
+| Comando | PACE | BPM | Intervallo nominale mosse |
+| --- | --- | --- | --- |
+| 1 | 1 | 100 | 2,40 s |
+| 17 | 5 | 180 | 1,33 s |
+| 33 | 9 | 200 | 1,20 s |
+| 65 | 17 | 240 | 1,00 s |
+| 97 | 25 | 280 | 0,86 s |
+| 129 e oltre | 33 | 320 | 0,75 s |
+
+Quattro note ascendenti di organo accompagnano il countdown sullo stesso clock del bersaglio. Le note si accorciano alle alte velocità, con un piccolo spazio tra una e l’altra; anche le animazioni di gioco si accorciano (da 850 a circa 391 ms), mantenendo tutte le 12 pose. Le reazioni celebrative conservano la loro durata protetta di 1,35 s. Gli annunci vocali delle mosse restano attivi; il finale mantiene solo musica e battuta scritta. Audio ambient rispetta la modalità silenziosa. Il pulsante audio è in Home; la voce inglese disponibile sul dispositivo può differire. Background mette in pausa senza consumare vite; Resume conserva il tempo relativo al bersaglio.
+
 
 ## Struttura e scelte
 
@@ -81,7 +93,7 @@ Nessun record App Store Connect o componente Game Center è stato creato dall’
 
 Comandi testuali oltre ai colori, etichette VoiceOver, azioni accessibili per le quattro mosse, pulsanti alternativi, layout relativo alle dimensioni dello schermo e rispetto di Reduce Motion per il personaggio. La sfida resta temporizzata: non si dichiara equivalenza dell’esperienza con VoiceOver. Interfaccia in inglese; stringhe SwiftUI localizzabili e estrazione Xcode abilitata, ma traduzioni non ancora aggiunte. Dimensioni Dynamic Type estreme e modelli iPhone aggiuntivi richiedono QA dedicata.
 
-Nessuna analytics, pubblicità, tracking, microfono o dato sensibile. UserDefaults conserva il record, i progressi achievement e le conferme di sincronizzazione per identificativo giocatore Game Center. Game Center è opzionale e usa l’account Apple; il manifest privacy dichiara accesso alle preferenze e uso del clock per intervalli interni, secondo [la documentazione Apple](https://developer.apple.com/documentation/bundleresources/describing-use-of-required-reason-api). Prima di una distribuzione occorrono revisione privacy, conferma editoriale dell’icona e degli asset in `AppStore`, QA audio e hardware, localizzazioni e configurazione Game Center.
+Nessuna analytics, pubblicità, tracking, microfono o dato sensibile. UserDefaults conserva il record, le preferenze audio, i progressi achievement e le conferme di sincronizzazione per identificativo giocatore Game Center. Game Center è opzionale e usa l’account Apple; il manifest privacy dichiara accesso alle preferenze e uso del clock per intervalli interni, secondo [la documentazione Apple](https://developer.apple.com/documentation/bundleresources/describing-use-of-required-reason-api). Prima di una distribuzione occorrono revisione privacy, conferma editoriale dell’icona e degli asset in `AppStore`, QA audio e hardware, localizzazioni e configurazione Game Center.
 
 
 ## Pacchetto visivo e archivio locale
@@ -100,7 +112,7 @@ Il secondo comando richiede le catture reali esportate in `AppStore/RawScreensho
 
 Soglie di **punteggio numerico per singola partita**: 10, 23, 33, 50, 81, 100. Non sono conteggi delle mosse o della combo. Ogni soglia attiva una breve celebrazione una volta per run, con animazione dedicata di 12 pose e uno stacco originale di organo. Il tempo di gioco si ferma per 1,35 secondi; nessun gesto o vita viene consumato. Keep playing salta la pausa; il comando successivo riparte con quattro beat completi. Pause/background conservano anche il tempo della celebrazione. Tutorial escluso dai premi.
 
-Cinque finali ironici dipendono dal punteggio raggiunto; la reazione, la battuta e la voce finale non bloccano Play Again. Audio disattivato e Reduce Motion sono rispettati. Il vecchio record a scala 100/50 è separato dalla nuova scala 2/1: chiavi locali e leaderboard `v2`, senza conversioni arbitrarie.
+Cinque finali ironici dipendono dal punteggio raggiunto; la reazione e la battuta scritta non bloccano Play Again. La battuta finale non viene letta: resta la cadenza musicale; gli annunci vocali delle mosse sono invariati. Audio disattivato e Reduce Motion sono rispettati. Il vecchio record a scala 100/50 è separato dalla nuova scala 2/1: chiavi locali e leaderboard `v2`, senza conversioni arbitrarie.
 
 `Sources/Domain/Rewards.swift` definisce soglie, finali e ledger puro. `Sources/Data/Achievements.swift` persiste il massimo progresso percentuale per premio e prova a inviarlo dopo autenticazione esplicita. Errori/offline mantengono la coda; retry ogni 15 secondi mentre l’app è attiva, nessuna richiesta sovrapposta. Le conferme sono per giocatore e per snapshot: progressi maturati durante un invio restano pendenti. Il progresso locale appartiene al dispositivo e può essere riportato agli account usati su quel dispositivo; non viene scaricato o unito lo storico remoto di altri dispositivi. La celebrazione può ripetersi nelle nuove partite; l’achievement Apple proposto è non ripetibile.
 
@@ -112,8 +124,18 @@ Per rigenerare il progetto conservando gli override di firma correnti:
 python3 Scripts/regenerate_project.py
 ```
 
-Verifica finale: 28 test Domain, 15 app e 8 UI su iPhone 18 Pro Max. Ulteriore verifica mirata su iPhone 18 Pro dopo l’ultima modifica audio. Dettagli e media in [RewardsUpdate](Documentation/RewardsUpdate.md).
+Verifica dello snapshot iniziale dei premi: 28 test Domain, 15 app e 8 UI; dettagli in [RewardsUpdate](Documentation/RewardsUpdate.md). La verifica attuale della progressione e della rifinitura comprende 32 test Domain, 22 app e 12 UI, build Release per simulatore e controlli mirati del layout finale. Risultati e immagini in [Polish](Documentation/Polish/README.md).
 
 ## Firma su un altro Mac
 
 Per il simulatore non serve un team. Per un dispositivo, copiare `Configuration/LocalSigning.xcconfig.example` in `Configuration/LocalSigning.xcconfig` e scegliere il proprio team; il file locale è escluso da Git. Certificati, profili, archivi, cache e risultati Xcode non sono versionati. Il bundle ID resta nella configurazione condivisa. Il repository non assegna una licenza commerciale agli asset di riferimento forniti dall’utente.
+
+## Rifinitura del club
+
+Sound check (icona cursori in Home, o durante la pausa) conserva sul dispositivo il master audio e la scelta separata degli annunci vocali. Spegnere gli annunci lascia organo ed effetti; disattivare il master non cancella la preferenza della voce. Il finale non legge mai la battuta.
+
+La Home alterna una breve posa di vanità ogni otto secondi, con scala costante; Reduce Motion mantiene la posa ferma. Piccoli coriandoli e un lieve accento di scala compaiono solo nella celebrazione protetta. Nessun effetto decorativo copre l’input attivo. Il feedback mostra i punti realmente guadagnati, distingue Perfect con oro e rende gli errori più contrastati. I quattro pulsanti dei gesti hanno un’altezza di 44 punti.
+
+Il tabellino finale riporta punti, record, BPM e premi della run; il timbro record appare solo quando il punteggio supera il precedente record. Cinque fasce di risultato con tre battute ciascuna (15 totali), alternate nei replay della sessione. Club records mostra il progresso locale reale dei sei premi con percentuali e contrassegno di completamento.
+
+Scene DEBUG di verifica visiva: argomenti di lancio `--milestone-review` e `--pace-review` (clock fermo, progressi sintetici, nessun salvataggio). Non sono modalità di gioco pubbliche né fonti per screenshot promozionali. Dettagli, confronti e verifiche in `Documentation/Polish/README.md`.

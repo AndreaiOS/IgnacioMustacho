@@ -1,3 +1,4 @@
+import AVFoundation
 import UIKit
 import XCTest
 
@@ -12,14 +13,119 @@ private final class MemoryRecords: RecordStore {
     var cues = 0
     var awards: [Int] = []
     var onStart: () -> Void = {}
+    var voiceEnabled = true
+    func setVoiceEnabled(_ enabled: Bool) { voiceEnabled = enabled }
     func startArena() { onStart() }
     func cue(_ move: Move, delay: Double, beatDuration: Double) { cues += 1 }
     func hit() {}
     func celebrate(_ threshold: Int) { awards.append(threshold) }
-    func finish(quote: String) { finishes += 1 }
+    func finish() { finishes += 1 }
     func stop() {}
 }
+@MainActor private final class RecordingVoice: AVSpeechSynthesizer {
+    var spoken: [String] = []
+    var stops = 0
+    override func speak(_ utterance: AVSpeechUtterance) { spoken.append(utterance.speechString) }
+    override func stopSpeaking(at boundary: AVSpeechBoundary) -> Bool {
+        stops += 1
+        return true
+    }
+}
 @MainActor final class GameModelTests: XCTestCase {
+    func testGameOverStopsVoiceWithoutReadingTheEndingQuote() {
+        let voice = RecordingVoice()
+        let audio = SynthAudio(voice: voice)
+        audio.cue(.dribble, delay: 0, beatDuration: 0.6)
+        let previousStops = voice.stops
+        audio.finish()
+        XCTAssertEqual(voice.spoken, [Move.dribble.rawValue])
+        XCTAssertGreaterThan(voice.stops, previousStops)
+        audio.stop()
+    }
+    func testGameplayStillAnnouncesAllFourMoves() {
+        let voice = RecordingVoice()
+        let audio = SynthAudio(voice: voice)
+        for move in [Move.dribble, .between, .behind, .shoot] {
+            audio.cue(move, delay: 0, beatDuration: 0.6)
+        }
+        XCTAssertEqual(voice.spoken, [Move.dribble.rawValue, "Between", "Behind", Move.shoot.rawValue])
+        audio.stop()
+    }
+
+    func testSpokenCallsCanBeDisabledAndEnabledWithoutReadingFinale() {
+        let voice = RecordingVoice()
+        let audio = SynthAudio(voice: voice)
+        audio.setVoiceEnabled(false)
+        audio.cue(.shoot, delay: 0, beatDuration: 0.1875)
+        XCTAssertTrue(voice.spoken.isEmpty)
+        XCTAssertGreaterThan(voice.stops, 0)
+        audio.setVoiceEnabled(true)
+        audio.cue(.between, delay: 0, beatDuration: 0.1875)
+        audio.finish()
+        XCTAssertEqual(voice.spoken, ["Between"])
+        audio.stop()
+    }
+    func testAudioPreferencesSurviveModelRecreationAndMasterMuteKeepsVoiceChoice() throws {
+        let name = "Ignacio.AudioTests.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let store = LocalAudioPreferences(defaults: defaults)
+        XCTAssertEqual(store.load(), AudioPreferences())
+        let audio = SilentAudio()
+        let first = GameModel(
+            records: MemoryRecords(), audio: audio, leaderboard: LeaderboardService(), preferences: store, clock: { 0 })
+        first.voiceEnabled = false
+        first.soundEnabled = false
+        XCTAssertFalse(audio.voiceEnabled)
+        let second = GameModel(
+            records: MemoryRecords(), audio: SilentAudio(), leaderboard: LeaderboardService(), preferences: store,
+            clock: { 0 })
+        XCTAssertFalse(second.voiceEnabled)
+        XCTAssertFalse(second.soundEnabled)
+        second.soundEnabled = true
+        XCTAssertFalse(second.voiceEnabled)
+        XCTAssertEqual(store.load(), AudioPreferences(soundEnabled: true, voiceEnabled: false))
+    }
+    func testFastestAnimationVisitsAllFramesBeforeNextInputWindow() {
+        let duration = 0.39
+        let samples = stride(from: 0.0, through: duration + 0.02, by: 1.0 / 60).map {
+            SpritePlayback.frame(at: $0, duration: duration)
+        }
+        XCTAssertEqual(Set(samples), Set(0..<12))
+        XCTAssertEqual(SpritePlayback.frame(at: duration + 0.01, duration: duration), 0)
+    }
+    func testLongRunKeepsAcceleratingAcrossAllCelebrationsAndPause() {
+        var clock = 1000.0
+        let audio = SilentAudio()
+        let model = GameModel(
+            records: MemoryRecords(), audio: audio, leaderboard: LeaderboardService(), clock: { clock })
+        model.play()
+        for _ in 0..<140 {
+            clock += model.game.target - model.now
+            model.gesture(model.game.move)
+            clock += model.game.timing.acceptedTimes.upperBound - model.now + 0.001
+            model.tick()
+            if model.celebration != nil {
+                model.pause()
+                clock += 30
+                model.resume()
+                clock += GameModel.interludeDuration + 0.01
+                model.tick()
+                XCTAssertNil(model.celebration)
+                XCTAssertEqual(model.game.target - model.now, model.game.commandInterval, accuracy: 0.00001)
+            }
+            XCTAssertEqual(model.game.lives, 3)
+        }
+        XCTAssertEqual(audio.awards, [10, 23, 33, 50, 81, 100])
+        XCTAssertEqual(model.game.paceLevel, 33)
+        XCTAssertEqual(60 / model.game.beatDuration, 320, accuracy: 0.00001)
+        let remaining = model.game.target - model.now
+        model.pause()
+        clock += 100
+        model.resume()
+        model.tick()
+        XCTAssertEqual(model.game.target - model.now, remaining, accuracy: 0.00001)
+    }
     func testMilestoneFreezesInputAndPauseThenRestartsFullCountdown() {
         var clock = 1000.0
         let audio = SilentAudio()
@@ -155,6 +261,26 @@ private final class MemoryRecords: RecordStore {
         model.touchEnded(x: -100, y: 0, at: clock)
         XCTAssertEqual(model.game.lives, 2)
         XCTAssertFalse(model.game.resolved)
+    }
+    func testNewBestIsEarnedAndNextRunClearsTheStamp() {
+        var clock = 1000.0
+        let model = GameModel(
+            records: MemoryRecords(), audio: SilentAudio(), leaderboard: LeaderboardService(), clock: { clock })
+        model.play()
+        clock = 1000 + model.game.target
+        model.gesture(model.game.move)
+        XCTAssertEqual(model.pointsEarned, 2)
+        clock = 1000 + model.game.timing.acceptedTimes.upperBound + 0.001
+        model.tick()
+        for _ in 0..<3 {
+            clock = 1000 + model.game.timing.acceptedTimes.upperBound + 0.001
+            model.tick()
+        }
+        XCTAssertTrue(model.isNewBest)
+        XCTAssertEqual(model.best, 2)
+        model.play()
+        XCTAssertFalse(model.isNewBest)
+        XCTAssertEqual(model.pointsEarned, 0)
     }
     func testGameOverPlaysFinaleOnlyOnce() {
         var clock = 1000.0

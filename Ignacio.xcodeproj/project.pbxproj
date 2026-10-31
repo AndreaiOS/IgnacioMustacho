@@ -15,6 +15,7 @@
 		12D7B17CAE12E784006A32A1 /* countdown1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 483C01EF938D51C5943AAFA9 /* countdown1.wav */; };
 		12F435F2EC7D13A6D57A12AC /* ignacio-clap-12.png in Resources */ = {isa = PBXBuildFile; fileRef = 24D3CD8B2084C54433D74262 /* ignacio-clap-12.png */; };
 		156BA6C359FE2DACAC4876C8 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26B700CD736402479B4A5D1 /* Services.swift */; };
+		186B01A4EA4F66B6B6FA1B69 /* AudioPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1500D74E9E731BE99412C75 /* AudioPreferences.swift */; };
 		18773AC0D8DD429078C0D605 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93A69627E28BE578ECB09AFB /* Assets.xcassets */; };
 		192E722C549E5B241E355517 /* TouchSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2878C8CDC54DBA1B76426 /* TouchSurface.swift */; };
 		259CE54F24E48C0F8B8C80A7 /* GestureInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50E00E3948A0957218B808 /* GestureInput.swift */; };
@@ -24,6 +25,7 @@
 		30504A1C79FE1069259C024A /* ignacio-atlas-v1.png in Resources */ = {isa = PBXBuildFile; fileRef = D28D9243AF372A5957BBC6B2 /* ignacio-atlas-v1.png */; };
 		33845DAF721C4DF896799906 /* squeak.wav in Resources */ = {isa = PBXBuildFile; fileRef = 277433B5801939773BA6B329 /* squeak.wav */; };
 		39A6CFAC6C92E7518159CD9B /* ignacio-between-12.png in Resources */ = {isa = PBXBuildFile; fileRef = C501CAC61A7338DF871AF9C5 /* ignacio-between-12.png */; };
+		4D2F1DAA2BD20A8442940ED6 /* LocalAudioPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A9F9CA2050A4837AB71A4 /* LocalAudioPreferences.swift */; };
 		51D65F6C57FF9BF6DEFE2544 /* award10.wav in Resources */ = {isa = PBXBuildFile; fileRef = 49AE2AAF28EB7983CB421022 /* award10.wav */; };
 		577C8FF327F9DE8C2B0DCB4B /* RhythmGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF3C658ECC3964747100DE0 /* RhythmGame.swift */; };
 		6252006710AE8719B03EDCB5 /* ArenaBackdrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6E7DC1695F9B6AE8BB0CE3 /* ArenaBackdrop.swift */; };
@@ -32,6 +34,7 @@
 		7AD4D9D92A178A7530DA02EC /* award33.wav in Resources */ = {isa = PBXBuildFile; fileRef = 45457F33814747E39F37983A /* award33.wav */; };
 		87FAA26711F05DD7C5B85A45 /* ignacio-dribble-12.png in Resources */ = {isa = PBXBuildFile; fileRef = C25289CF4212AB81F37B24A4 /* ignacio-dribble-12.png */; };
 		8B6DE38CB2E43FC84174A0A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47382B6789EF53E4B9416A5F /* LaunchScreen.storyboard */; };
+		966D8E8E2118DEF1052E147C /* ClubPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4051EF993F19FA95AFAEA00B /* ClubPresentation.swift */; };
 		A12D9D73981017EFFA9F22F4 /* award81.wav in Resources */ = {isa = PBXBuildFile; fileRef = B4D80A6F3091711463221AAD /* award81.wav */; };
 		A39FF6D62DB6B832D3AF8E95 /* ignacio-shrug-12.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EAC04E02B432C8C1F007B54 /* ignacio-shrug-12.png */; };
 		A3E2F9211602E0F160A5BCDA /* arena.wav in Resources */ = {isa = PBXBuildFile; fileRef = 854A23D408B8B25FAFBDC2B3 /* arena.wav */; };
@@ -85,6 +88,7 @@
 		30EA03BA9FEF5A5835F7D7DD /* countdown3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = countdown3.wav; sourceTree = "<group>"; };
 		3B72160C7A8F46029363B65B /* Ignacio.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Ignacio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4018A949598DA4CB4E709BB5 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		4051EF993F19FA95AFAEA00B /* ClubPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubPresentation.swift; sourceTree = "<group>"; };
 		42836387687495BA93A4C2D6 /* IgnacioTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = IgnacioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F2878C8CDC54DBA1B76426 /* TouchSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchSurface.swift; sourceTree = "<group>"; };
 		45457F33814747E39F37983A /* award33.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = award33.wav; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 		676C6253886BCF25EA39826E /* ignacio-shoot-12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ignacio-shoot-12.png"; sourceTree = "<group>"; };
 		67BBA212322382F4ACBA7681 /* HowToPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToPlayView.swift; sourceTree = "<group>"; };
 		6A13B3308CD8A12A231AF9AD /* AchievementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementTests.swift; sourceTree = "<group>"; };
+		794A9F9CA2050A4837AB71A4 /* LocalAudioPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAudioPreferences.swift; sourceTree = "<group>"; };
 		812FCA727D658D3DA373C7CA /* IgnacioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnacioApp.swift; sourceTree = "<group>"; };
 		8499EBDF4005E213EAEC3951 /* IgnacioUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = IgnacioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		854A23D408B8B25FAFBDC2B3 /* arena.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = arena.wav; sourceTree = "<group>"; };
@@ -109,6 +114,7 @@
 		9C6E7DC1695F9B6AE8BB0CE3 /* ArenaBackdrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArenaBackdrop.swift; sourceTree = "<group>"; };
 		9EAC04E02B432C8C1F007B54 /* ignacio-shrug-12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ignacio-shrug-12.png"; sourceTree = "<group>"; };
 		A28734A73C551DE584026580 /* Ignacio.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ignacio.entitlements; sourceTree = "<group>"; };
+		B1500D74E9E731BE99412C75 /* AudioPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPreferences.swift; sourceTree = "<group>"; };
 		B26B700CD736402479B4A5D1 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		B4D80A6F3091711463221AAD /* award81.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = award81.wav; sourceTree = "<group>"; };
 		B5E48A320150A463233F5AF0 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -195,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				5C24A8EF99A1B24570BB9EE9 /* Achievements.swift */,
+				794A9F9CA2050A4837AB71A4 /* LocalAudioPreferences.swift */,
 				B26B700CD736402479B4A5D1 /* Services.swift */,
 			);
 			path = Data;
@@ -211,6 +218,7 @@
 		6FCFA9051AF93E9279C68A59 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				B1500D74E9E731BE99412C75 /* AudioPreferences.swift */,
 				5B50E00E3948A0957218B808 /* GestureInput.swift */,
 				58887721DD755D95FF6F9EAD /* Rewards.swift */,
 				CEF3C658ECC3964747100DE0 /* RhythmGame.swift */,
@@ -260,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				9C6E7DC1695F9B6AE8BB0CE3 /* ArenaBackdrop.swift */,
+				4051EF993F19FA95AFAEA00B /* ClubPresentation.swift */,
 				EC0B60571D8ED9AB42535BB0 /* GameModel.swift */,
 				67BBA212322382F4ACBA7681 /* HowToPlayView.swift */,
 				812FCA727D658D3DA373C7CA /* IgnacioApp.swift */,
@@ -435,11 +444,14 @@
 			files = (
 				2E818AFF18EA12565FF97151 /* Achievements.swift in Sources */,
 				6252006710AE8719B03EDCB5 /* ArenaBackdrop.swift in Sources */,
+				186B01A4EA4F66B6B6FA1B69 /* AudioPreferences.swift in Sources */,
+				966D8E8E2118DEF1052E147C /* ClubPresentation.swift in Sources */,
 				FF913251DB03B43DB234D888 /* GameModel.swift in Sources */,
 				259CE54F24E48C0F8B8C80A7 /* GestureInput.swift in Sources */,
 				ED851811D856C2D70C84D42E /* HowToPlayView.swift in Sources */,
 				04F1FA3A74C27B8E677772C5 /* IgnacioApp.swift in Sources */,
 				0B9BCAF115B11B666C142CD4 /* IgnacioCharacter.swift in Sources */,
+				4D2F1DAA2BD20A8442940ED6 /* LocalAudioPreferences.swift in Sources */,
 				ECE50740558552214B736758 /* Rewards.swift in Sources */,
 				577C8FF327F9DE8C2B0DCB4B /* RhythmGame.swift in Sources */,
 				156BA6C359FE2DACAC4876C8 /* Services.swift in Sources */,

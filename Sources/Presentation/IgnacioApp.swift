@@ -11,6 +11,16 @@ enum SportsType {
 @main struct IgnacioApp: App {
     @StateObject private var model: GameModel
     init() {
+        #if DEBUG
+            if ProcessInfo.processInfo.arguments.contains("--milestone-review")
+                || ProcessInfo.processInfo.arguments.contains("--pace-review")
+            {
+                _model = StateObject(
+                    wrappedValue: ClubReview.model(
+                        fastPace: ProcessInfo.processInfo.arguments.contains("--pace-review")))
+                return
+            }
+        #endif
         let leaderboard = LeaderboardService()
         let achievements = AchievementService(
             store: LocalAchievementStore(defaults: .standard),
@@ -20,7 +30,7 @@ enum SportsType {
         _model = StateObject(
             wrappedValue: GameModel(
                 records: LocalRecordStore(defaults: .standard), audio: SynthAudio(), leaderboard: leaderboard,
-                achievements: achievements,
+                achievements: achievements, preferences: LocalAudioPreferences(defaults: .standard),
                 clock: { ProcessInfo.processInfo.systemUptime }))
     }
     var body: some Scene {
@@ -48,10 +58,11 @@ struct GameView: View {
     @Environment(\.accessibilityReduceMotion) private var reducedMotion
     @State private var showLeaderboard = false
     @State private var showGuide = false
+    @State private var showSound = false
     private let timer = Timer.publish(every: 1.0 / 60, on: .main, in: .common).autoconnect()
-    private let cream = Color(red: 0.97, green: 0.94, blue: 0.84)
-    private let dark = Color(red: 0.10, green: 0.25, blue: 0.20)
-    private let orange = Color(red: 0.94, green: 0.35, blue: 0.17)
+    private let cream = ClubStyle.cream
+    private let dark = ClubStyle.green
+    private let orange = ClubStyle.orange
 
     var body: some View {
         GeometryReader { geometry in
@@ -70,25 +81,51 @@ struct GameView: View {
                         title
                     }
                     ZStack(alignment: .bottom) {
+                        if model.celebration != nil {
+                            VictoryPaper(age: model.reactionAge, reducedMotion: reducedMotion)
+                        }
                         IgnacioCharacter(
                             move: model.displayMove, time: model.now, moveAge: model.moveAge,
                             reducedMotion: reducedMotion, anticipation: model.anticipation,
-                            reaction: model.displayReaction, reactionAge: model.reactionAge
+                            reaction: idleReaction ?? model.displayReaction,
+                            reactionAge: model.screen == .home ? idleAge : model.reactionAge,
+                            moveDuration: model.moveAnimationDuration,
+                            reactionScale: model.screen == .home ? 0.77 : 0.65
                         )
                         .frame(maxWidth: 340)
                         .padding(.bottom, model.screen == .playing ? 35 : 0)
+                        .scaleEffect(
+                            model.celebration != nil && !reducedMotion
+                                ? 1 + 0.025 * sin(min(1, model.reactionAge / GameModel.interludeDuration) * .pi) : 1,
+                            anchor: .bottom)
                         if model.screen == .playing && model.celebration == nil {
                             VStack(spacing: 3) {
-                                Text(model.feedback).font(.system(.caption, design: .monospaced, weight: .bold))
-                                    .foregroundStyle(model.game.lastError != nil ? orange : dark)
+                                HStack(spacing: 8) {
+                                    Text(model.feedback)
+                                    if model.game.resolved && model.pointsEarned > 0 {
+                                        Text("+\(model.pointsEarned)").monospacedDigit()
+                                    }
+                                }.font(.system(.caption, design: .monospaced, weight: .bold))
+                                    .foregroundStyle(model.game.lastError != nil ? ClubStyle.error : dark)
                                     .multilineTextAlignment(.center)
                                 Text(model.inputDetail).font(.system(size: 9, weight: .bold, design: .monospaced))
                                     .foregroundStyle(dark.opacity(0.75))
                             }.padding(.horizontal, 12).padding(.vertical, 7)
-                                .background(cream, in: RoundedRectangle(cornerRadius: 4))
+                                .background(
+                                    model.game.resolved && model.game.lastJudgement == .perfect
+                                        ? ClubStyle.gold : cream, in: RoundedRectangle(cornerRadius: 4))
                         }
                     }
                     .frame(maxHeight: .infinity)
+                    .overlay(alignment: .topLeading) {
+                        if model.screen == .home {
+                            ClubStamp(text: "SELF-APPOINTED MVP", color: ClubStyle.gold)
+                                .rotationEffect(.degrees(-4)).padding(.top, 8).allowsHitTesting(false)
+                        } else if model.screen == .results && model.isNewBest {
+                            ClubStamp(text: "PERSONAL BEST. OBVIOUSLY.", color: ClubStyle.gold)
+                                .rotationEffect(.degrees(-3)).padding(.top, 8).allowsHitTesting(false)
+                        }
+                    }
                     .overlay {
                         if model.screen == .playing && !model.paused && model.celebration == nil {
                             TouchSurface(model: model).accessibilityIdentifier("courtGestureSurface")
@@ -96,8 +133,10 @@ struct GameView: View {
                     }
                     if model.screen == .playing, let celebration = model.celebration {
                         VStack(spacing: 10) {
-                            Text(celebration.quip).font(.headline).multilineTextAlignment(.center)
-                            Text("QUICK VICTORY LAP · CLOCK PAUSED").font(.caption.bold())
+                            Text(celebration.quip).font(.headline).multilineTextAlignment(.center).fixedSize(
+                                horizontal: false, vertical: true)
+                            Text("APPLAUSE: PROVIDED BY IGNACIO").font(.caption.bold()).foregroundStyle(ClubStyle.gold)
+                            Text("Clock paused. You have time for this.").font(.caption)
                             Button("Keep playing") { model.skipInterlude() }.frame(minHeight: 44)
                         }.padding(18).frame(maxWidth: .infinity).background(dark, in: RoundedRectangle(cornerRadius: 8))
                     } else if model.screen == .playing {
@@ -120,6 +159,9 @@ struct GameView: View {
         .sheet(isPresented: $showGuide) {
             HowToPlayView(play: { model.play() }, practice: { model.play(tutorial: true) })
         }
+        .sheet(isPresented: $showSound) {
+            SoundCheckView(model: model).presentationDetents([.medium, .large]).presentationDragIndicator(.visible)
+        }
         .sheet(isPresented: $showLeaderboard) {
             LeaderboardView(service: model.leaderboard, best: model.best, achievements: model.achievements)
         }
@@ -127,6 +169,12 @@ struct GameView: View {
         .accessibilityAction(named: "Between the legs") { model.gesture(.between) }
         .accessibilityAction(named: "Behind the back") { model.gesture(.behind) }
         .accessibilityAction(named: "Shoot") { model.gesture(.shoot) }
+    }
+    private var idleAge: Double { model.now.truncatingRemainder(dividingBy: 8) }
+    private var idleReaction: Reaction? {
+        guard model.screen == .home, !reducedMotion, idleAge < GameModel.interludeDuration else { return nil }
+        let reactions: [Reaction] = [.flex, .shrug, .clap]
+        return reactions[Int(model.now / 8) % reactions.count]
     }
     private var header: some View {
         HStack {
@@ -149,7 +197,12 @@ struct GameView: View {
                     model.soundEnabled.toggle()
                 } label: {
                     Image(systemName: model.soundEnabled ? "speaker.wave.2" : "speaker.slash")
-                }.accessibilityLabel(model.soundEnabled ? "Mute sound" : "Enable sound")
+                }.frame(width: 44, height: 44).accessibilityLabel(model.soundEnabled ? "Mute sound" : "Enable sound")
+                Button {
+                    showSound = true
+                } label: {
+                    Image(systemName: "slider.horizontal.3").frame(width: 44, height: 44)
+                }.accessibilityLabel("Sound check").accessibilityIdentifier("soundCheck")
             }
         }.frame(minHeight: 28)
     }
@@ -171,7 +224,7 @@ struct GameView: View {
                 Text(
                     model.game.tutorial
                         ? "WARM-UP \(model.game.index + 1)/4"
-                        : "PACE \(min(5, model.game.index / 4 + 1))  /  \(Int(60 / model.game.beatDuration)) BPM")
+                        : "PACE \(model.game.paceLevel)  /  \(Int((60 / model.game.beatDuration).rounded())) BPM")
                 Spacer()
                 HStack(spacing: 5) {
                     ForEach(0..<3) { index in
@@ -243,7 +296,7 @@ struct GameView: View {
             .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(dark.opacity(0.25), lineWidth: 2))
     }
     private func moveButton(_ text: String, _ move: Move) -> some View {
-        Button(text) { model.gesture(move) }.font(.caption.bold()).frame(maxWidth: .infinity).frame(height: 33)
+        Button(text) { model.gesture(move) }.font(.caption.bold()).frame(maxWidth: .infinity).frame(height: 44)
             .background(dark.opacity(0.07), in: Capsule()).accessibilityLabel(move.rawValue)
     }
     private var homeControls: some View {
@@ -254,7 +307,7 @@ struct GameView: View {
             HStack {
                 Button("Tutorial") { model.play(tutorial: true) }.accessibilityIdentifier("tutorial")
                 Spacer()
-                Button("Club records ↗") { showLeaderboard = true }
+                Button("Club records ↗") { showLeaderboard = true }.accessibilityIdentifier("clubRecords")
             }.font(.subheadline.bold())
             Text("PERSONAL BEST  /  \(model.best)").font(.system(.caption2, design: .monospaced, weight: .bold))
                 .tracking(2).padding(.top, 6)
@@ -262,13 +315,21 @@ struct GameView: View {
     }
     private var results: some View {
         VStack(spacing: 10) {
+            Text("OFFICIAL-ISH BOX SCORE").font(.system(.caption2, design: .monospaced, weight: .bold)).tracking(2)
+                .foregroundStyle(ClubStyle.gold)
             Text("\(model.game.score)").font(SportsType.score(48))
                 .accessibilityIdentifier("finalScore")
             Text(model.ending?.quip ?? "The moustache remains undefeated.")
-                .font(.headline).multilineTextAlignment(.center)
-            Text("BEST \(model.best)  ·  THREE STRIKES, STILL A LEGEND").font(
-                .system(.caption2, design: .monospaced, weight: .bold)
-            ).minimumScaleFactor(0.7).lineLimit(1)
+                .font(.headline).multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
+            HStack {
+                Text("BEST \(model.best)")
+                Spacer()
+                Text("\(Int((60 / model.game.beatDuration).rounded())) BPM")
+                Spacer()
+                Text("HONOURS \(model.earnedMilestones.count)/6")
+            }.font(.system(.caption2, design: .monospaced, weight: .bold)).foregroundStyle(cream.opacity(0.85))
+                .padding(.vertical, 6)
+                .overlay(alignment: .top) { Rectangle().fill(cream.opacity(0.2)).frame(height: 1) }
             primary("PLAY AGAIN", identifier: "playAgain") { model.play() }
             Button("Back to club") { model.home() }.font(.subheadline.bold())
         }.padding(16).background(dark.opacity(0.96), in: RoundedRectangle(cornerRadius: 8))
@@ -289,7 +350,10 @@ struct GameView: View {
         ZStack {
             dark.opacity(0.88).ignoresSafeArea()
             VStack(spacing: 22) {
-                Text("TAKE A BREATHER.").font(SportsType.display(34)).foregroundStyle(cream)
+                Text("TACTICAL HAIR BREAK.").font(SportsType.display(34)).foregroundStyle(cream).multilineTextAlignment(
+                    .center)
+                Text("The crowd is holding its imaginary breath.").font(.subheadline).multilineTextAlignment(.center)
+                Button("Sound check") { showSound = true }.foregroundStyle(ClubStyle.gold)
                 primary("RESUME", identifier: "resume") { model.resume() }
                 Button("Back to club") {
                     model.home()
@@ -308,22 +372,30 @@ struct LeaderboardView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
-                    Image(systemName: "trophy.fill").font(.system(size: 64)).foregroundStyle(.orange)
-                    Text("SHADOW CLUB").font(SportsType.display(38))
-                    Text("Your personal best").font(.headline)
-                    Text("\(best)").font(SportsType.score(60))
-                    Text(service.status).multilineTextAlignment(.center).font(.subheadline)
-                    Button("Connect Game Center") { service.show() }.buttonStyle(.borderedProminent)
+                VStack(alignment: .leading, spacing: 24) {
+                    Text("TROPHY ROOM.\nPOPULATION: YOU.").font(SportsType.display(36))
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("\(best)").font(SportsType.score(52)).foregroundStyle(ClubStyle.gold)
+                        Text("PERSONAL BEST").font(.system(.caption, design: .monospaced, weight: .bold))
+                    }
+                    Text("No selection committee. Remarkable taste in winners.").font(.subheadline)
                     if let achievements { AchievementList(service: achievements) }
-                    Button("Game Center awards") { service.show(state: .achievements) }.buttonStyle(.bordered)
-                    Text(
-                        "Online rankings and awards require the developer’s Game Center configuration. Local progress always works."
-                    )
-                    .font(.caption).foregroundStyle(.secondary).multilineTextAlignment(.center)
-                }.padding(28)
-            }.toolbar { Button("Done") { dismiss() } }
-        }
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("BEYOND THE CLUB").font(SportsType.display(24))
+                        Text(service.status).font(.subheadline)
+                        Button("Connect Game Center") { service.show() }.buttonStyle(.borderedProminent)
+                        Button("Game Center awards") { service.show(state: .achievements) }.buttonStyle(.bordered)
+                        Text("Club awards are saved on this iPhone and work offline.").font(.caption)
+                    }.padding(18).frame(maxWidth: .infinity, alignment: .leading)
+                        .background(.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 8))
+                }.padding(24)
+            }
+            .background(ClubStyle.green).foregroundStyle(ClubStyle.cream)
+            .navigationTitle("Club records").navigationBarTitleDisplayMode(.inline)
+            .toolbar { Button("Done") { dismiss() } }
+            .toolbarBackground(ClubStyle.green, for: .navigationBar).toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+        }.tint(ClubStyle.orange)
     }
 }
 
@@ -340,17 +412,36 @@ private struct AchievementList: View {
     @ObservedObject var service: AchievementService
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("THE VERY OFFICIAL TROPHY ROOM").font(SportsType.display(24))
+            Text("LOCAL CLUB HONOURS").font(SportsType.display(24)).foregroundStyle(ClubStyle.gold)
             ForEach(Milestone.standard) { award in
-                HStack {
-                    Image(systemName: service.isEarned(award.threshold) ? "checkmark.seal.fill" : "seal")
-                    VStack(alignment: .leading) {
-                        Text("\(award.threshold) points · \(award.title)").font(.headline)
-                        Text(award.quip).font(.caption)
+                HStack(spacing: 14) {
+                    ZStack {
+                        Circle().strokeBorder(
+                            service.isEarned(award.threshold) ? ClubStyle.gold : ClubStyle.cream.opacity(0.25),
+                            lineWidth: 2)
+                        Text("\(award.threshold)").font(SportsType.score(19))
+                    }.frame(width: 56, height: 56).accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Text(award.title.uppercased()).font(SportsType.display(22, relativeTo: .headline))
+                            Spacer(minLength: 4)
+                            if service.isEarned(award.threshold) {
+                                Image(systemName: "checkmark.seal.fill").foregroundStyle(ClubStyle.gold)
+                            }
+                        }
+                        Text(award.quip).font(.caption).foregroundStyle(ClubStyle.cream.opacity(0.85))
+                        ProgressView(value: service.percentComplete(award.threshold), total: 100).tint(ClubStyle.gold)
+                            .accessibilityLabel("\(award.title), \(award.threshold) points")
+                            .accessibilityValue("\(Int(service.percentComplete(award.threshold))) percent")
+                        Text(
+                            service.isEarned(award.threshold)
+                                ? "OFFICIALLY SELF-CERTIFIED" : "REACH \(award.threshold) POINTS IN ONE RUN"
+                        )
+                        .font(.system(size: 9, weight: .bold, design: .monospaced)).tracking(0.5)
                     }
-                }
+                }.padding(14).background(.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 8))
             }
-            Text(service.status).font(.caption).foregroundStyle(.secondary)
+            Text(service.status).font(.caption).foregroundStyle(ClubStyle.cream.opacity(0.7))
         }
     }
 }

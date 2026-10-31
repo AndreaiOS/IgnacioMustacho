@@ -46,7 +46,8 @@ struct RegisteredSprite {
 
 /// Distinct drawn in-betweens, never opacity blends or optical-flow limbs.
 enum SpritePlayback {
-    static func frame(at age: Double) -> Int {
+    static func frame(at age: Double, duration: Double = 0.85) -> Int {
+        let age = age * 0.85 / max(0.01, duration)
         let ends = [0.045, 0.095, 0.15, 0.21, 0.28, 0.36, 0.45, 0.55, 0.65, 0.75, 0.85]
         return ends.firstIndex(where: { age < $0 }).map { $0 + 1 } ?? 0
     }
@@ -59,6 +60,8 @@ struct IgnacioCharacter: View {
     var anticipation = 0.0
     var reaction: Reaction? = nil
     var reactionAge = 0.0
+    var moveDuration = 0.85
+    var reactionScale: CGFloat = 0.65
     private var row: Int {
         if let reaction { return 4 + (Reaction.allCases.firstIndex(of: reaction) ?? 0) }
         return Move.allCases.firstIndex(of: move ?? .dribble) ?? 0
@@ -69,13 +72,13 @@ struct IgnacioCharacter: View {
         }
         guard move != nil else { return 0 }
         if anticipation > 0 { return anticipation > 0.25 ? 1 : 0 }
-        return reducedMotion ? 6 : SpritePlayback.frame(at: moveAge)
+        return reducedMotion ? 6 : SpritePlayback.frame(at: moveAge, duration: moveDuration)
     }
     var body: some View {
         if IgnacioSprites.frames.count == 10, IgnacioSprites.frames[row].count == 12 {
             GeometryReader { geometry in
                 let sprite = IgnacioSprites.frames[row][frame]
-                let scale = geometry.size.height * (reaction == nil ? 0.77 : 0.65) / sprite.neutralHeight
+                let scale = geometry.size.height * (reaction == nil ? 0.77 : reactionScale) / sprite.neutralHeight
                 let floor = geometry.size.height * 0.95
                 let lift =
                     reaction == nil && move == .shoot && (6...8).contains(frame) ? geometry.size.height * 0.025 : 0

@@ -29,11 +29,11 @@ Canonical identity: `Documentation/CharacterReferences/Ignacio-Canonical.png`. C
 
 ## Current build and rewards
 
-Bundle ID: `com.ignaciomustacho.shadowbasketball`. Signed development archive: `BuildArtifacts/Ignacio-1.0-1-Current.xcarchive`; packaging and signature verified. Earlier archives use the old prototype ID. No distribution export or upload performed.
+Bundle ID: `com.ignaciomustacho.shadowbasketball`. Historical signed development archive: `BuildArtifacts/Ignacio-1.0-1-Current.xcarchive`; packaging and signature verified for that earlier rewards snapshot. It predates the 320 BPM curve, final-voice removal and club polish. Earlier archives use the old prototype ID. No distribution export or upload performed.
 
 `GameCenter/Achievements-en.json` contains six proposed local achievement IDs, pre-earned/earned copy and explicit in-game thresholds. `GameCenter/award-*.png` are six original vector badges exported by `Scripts/make_achievement_badges.swift`, 1024×1024 RGB at 72 ppi. Their 10-point Game Center reward values are separate from the 10/23/33/50/81/100 game thresholds. Apple requires a localized image of this size and color space: [achievement reference](https://developer.apple.com/help/app-store-connect/reference/game-center/achievements/). These files do not create Apple records.
 
-Screenshots were refreshed from the passing full UI suite on the new bundle ID: 15 app tests and 8 UI tests, plus 28 domain tests. Raw `RewardAnimations.png` is a DEBUG animation review grid, excluded from promotional screenshots. `GameOver.png` is a real zero-point defeat. Artwork prompts for the six reactions are in `Documentation/Celebration-Prompts.json` and `Documentation/Celebration-Extra-Prompts.json`.
+Screenshots were refreshed after club polish from the passing iPhone 18 Pro Max suite (22 app tests, 12 UI tests; plus 32 domain tests). The GameOver and Gameplay captures were replaced after the final quote-wrapping regression test passed on both simulator sizes. Four promotional cards were regenerated from these current captures. Synthetic DEBUG milestone/320 BPM scenes are kept only in Documentation/Polish, outside this promotional package. Raw `RewardAnimations.png` is a DEBUG animation review grid, excluded from promotional screenshots. `GameOver.png` is a real zero-point defeat. Artwork prompts for the six reactions are in `Documentation/Celebration-Prompts.json` and `Documentation/Celebration-Extra-Prompts.json`.
 
 ## Still required from the owner / Apple
 

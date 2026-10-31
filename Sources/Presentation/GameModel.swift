@@ -8,10 +8,24 @@ import UIKit
     @Published var now = 0.0
     @Published var paused = false
     @Published var best: Int
+    @Published private(set) var moveAnimationDuration = 0.85
     @Published var animatedMove: Move?
     @Published var feedback = "FIND YOUR RHYTHM"
     @Published var inputDetail = "TAP OR SWIPE ON THE COURT"
-    @Published var soundEnabled = true { didSet { if !soundEnabled { audio.stop() } } }
+    @Published var soundEnabled = true {
+        didSet {
+            if !soundEnabled { audio.stop() }
+            saveAudioPreferences()
+        }
+    }
+    @Published var voiceEnabled = true {
+        didSet {
+            audio.setVoiceEnabled(voiceEnabled)
+            saveAudioPreferences()
+        }
+    }
+    @Published private(set) var isNewBest = false
+    @Published private(set) var pointsEarned = 0
     @Published private(set) var celebration: Milestone?
     @Published private(set) var ending: GameEnding?
     @Published private(set) var reactionAge = 0.0
@@ -20,6 +34,7 @@ import UIKit
     private var pendingMilestones: [Milestone] = []
     private var reactionOrigin = 0.0
     static let interludeDuration = 1.35
+    private let preferences: AudioPreferencesStore?
     private let records: RecordStore
     private let audio: GameAudio
     private let clock: () -> Double
@@ -29,17 +44,27 @@ import UIKit
     private var feedbackTime = -10.0
     private var input: GestureInput?
     private var tutorialCompleted = false
+    private var completedRuns = 0
 
     init(
         records: RecordStore, audio: GameAudio, leaderboard: LeaderboardService,
-        achievements: AchievementService? = nil, clock: @escaping () -> Double
+        achievements: AchievementService? = nil, preferences: AudioPreferencesStore? = nil,
+        clock: @escaping () -> Double
     ) {
+        self.preferences = preferences
         self.achievements = achievements
         self.records = records
         self.audio = audio
         self.leaderboard = leaderboard
         self.clock = clock
         best = records.best
+        let settings = preferences?.load() ?? AudioPreferences()
+        soundEnabled = settings.soundEnabled
+        voiceEnabled = settings.voiceEnabled
+        audio.setVoiceEnabled(voiceEnabled)
+    }
+    private func saveAudioPreferences() {
+        preferences?.save(AudioPreferences(soundEnabled: soundEnabled, voiceEnabled: voiceEnabled))
     }
     func play(tutorial: Bool = false) {
         game = RhythmGame(tutorial: tutorial)
@@ -47,6 +72,8 @@ import UIKit
         pendingMilestones = []
         celebration = nil
         ending = nil
+        isNewBest = false
+        pointsEarned = 0
         reactionAge = 0
         now = 0
         announced = -1
@@ -100,13 +127,15 @@ import UIKit
                 tutorialCompleted = true
                 play()
             } else {
-                ending = GameEnding.forScore(game.score)
+                ending = GameEnding.forScore(game.score, attempt: completedRuns)
+                completedRuns += 1
                 reactionOrigin = clock()
                 reactionAge = 0
                 animatedMove = nil
-                if soundEnabled, let ending { audio.finish(quote: ending.quip) }
+                if soundEnabled { audio.finish() }
                 achievements?.record(score: game.score)
                 achievements?.flushNow()
+                isNewBest = game.score > best
                 records.save(game.score)
                 best = records.best
                 leaderboard.submit(game.score)
@@ -118,7 +147,7 @@ import UIKit
             announced = game.index
             if soundEnabled { audio.cue(game.move, delay: game.target - now, beatDuration: game.beatDuration) }
         }
-        if now - feedbackTime > 0.85 { animatedMove = nil }
+        if now - feedbackTime > moveAnimationDuration { animatedMove = nil }
     }
     func gesture(_ move: Move) {
         guard screen == .playing, !paused, celebration == nil else { return }
@@ -151,10 +180,13 @@ import UIKit
         now = clock() - origin
         guard action.commandID == game.index else { return }
         inputDetail = "YOU: \(action.move.rawValue.uppercased())"
+        let previousScore = game.score
         guard let judgement = game.perform(action.move, at: action.time, commandID: action.commandID) else {
             if !game.resolved { feedback = "WAIT — NO LIFE LOST" }
             return
         }
+        pointsEarned = game.score - previousScore
+        moveAnimationDuration = game.moveAnimationDuration
         animatedMove = action.move
         feedback =
             game.lastError.map { error in

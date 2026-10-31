@@ -45,7 +45,7 @@ save('finish', (sum(organ(n / RATE - start, frequency, .85 if start == .7 else .
                     * (.25 if start == .7 else .45) for start, frequency in notes)
                 for n in range(int(RATE * 1.65))))
 
-# Instrumental review mix at the actual gameplay tempi. Not used by the app.
+# Historical instrumental review of the original 100–167 BPM curve. Not used by the app.
 import array
 
 def read(name):

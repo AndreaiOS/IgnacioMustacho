@@ -10,21 +10,24 @@ final class LocalRecordStore: RecordStore {
 }
 
 @MainActor protocol GameAudio {
+    func setVoiceEnabled(_ enabled: Bool)
     func startArena()
     func cue(_ move: Move, delay: Double, beatDuration: Double)
     func hit()
-    func finish(quote: String)
+    func finish()
     func celebrate(_ threshold: Int)
     func stop()
 }
 @MainActor final class SynthAudio: GameAudio {
-    private let voice = AVSpeechSynthesizer()
+    private var voiceEnabled = true
+    private let voice: AVSpeechSynthesizer
     private var countdown: [AVAudioPlayer] = []
     private var ambience: AVAudioPlayer?
     private var ending: AVAudioPlayer?
     private var squeak: AVAudioPlayer?
     private var awards: [Int: AVAudioPlayer] = [:]
-    init() {
+    init(voice: AVSpeechSynthesizer = AVSpeechSynthesizer()) {
+        self.voice = voice
         do {
             try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: [.mixWithOthers])
             for index in 0..<4 {
@@ -42,8 +45,13 @@ final class LocalRecordStore: RecordStore {
         guard let url = Bundle.main.url(forResource: name, withExtension: "wav") else { return nil }
         let player = try AVAudioPlayer(contentsOf: url)
         player.volume = 0.65
+        player.enableRate = name.hasPrefix("countdown")
         player.prepareToPlay()
         return player
+    }
+    func setVoiceEnabled(_ enabled: Bool) {
+        voiceEnabled = enabled
+        if !enabled { voice.stopSpeaking(at: .immediate) }
     }
     func startArena() {
         voice.stopSpeaking(at: .immediate)
@@ -55,10 +63,12 @@ final class LocalRecordStore: RecordStore {
         for (index, player) in countdown.enumerated() {
             player.stop()
             player.currentTime = 0
+            player.rate = Float(RhythmTiming.notePlaybackRate(duration: player.duration, beatDuration: beatDuration))
             let offset = delay - Double(3 - index) * beatDuration
             if offset >= -0.035 { player.play(atTime: player.deviceCurrentTime + max(0.02, offset)) }
         }
         voice.stopSpeaking(at: .immediate)
+        guard voiceEnabled else { return }
         let spoken = move == .between ? "Between" : move == .behind ? "Behind" : move.rawValue
         let utterance = AVSpeechUtterance(string: spoken)
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
@@ -69,15 +79,10 @@ final class LocalRecordStore: RecordStore {
         squeak?.currentTime = 0
         squeak?.play()
     }
-    func finish(quote: String) {
+    func finish() {
         stop()
         ending?.currentTime = 0
         ending?.play()
-        let line = AVSpeechUtterance(string: quote)
-        line.voice = AVSpeechSynthesisVoice(language: "en-US")
-        line.rate = 0.48
-        line.preUtteranceDelay = 1.6
-        voice.speak(line)
     }
     func celebrate(_ threshold: Int) {
         stop()

@@ -14,7 +14,7 @@ Stato verificato il 31 ottobre 2026. Nessun caricamento, creazione record o modi
 
 ## Firma e archivi
 
-Archivio corrente: **`BuildArtifacts/Ignacio-1.0-1-Current.xcarchive`**, versione 1.0 (1), nuovo bundle ID, icona finale e sei premi. Archive Release riuscito senza `-allowProvisioningUpdates`, usando il profilo già disponibile sul Mac. Packaging e `codesign --verify --deep --strict` riusciti. Entitlements: team locale selezionato, application identifier con nuovo bundle ID, Game Center true, `get-task-allow = true`.
+Archivio firmato dello snapshot iniziale dei premi, precedente alla progressione 320 BPM e alla rifinitura del club: **`BuildArtifacts/Ignacio-1.0-1-Current.xcarchive`**, versione 1.0 (1), nuovo bundle ID, icona finale e sei premi. Archive Release riuscito senza `-allowProvisioningUpdates`, usando il profilo già disponibile sul Mac. Packaging e `codesign --verify --deep --strict` riusciti. Entitlements: team locale selezionato, application identifier con nuovo bundle ID, Game Center true, `get-task-allow = true`.
 
 È una firma **di sviluppo**, non una IPA validata per App Store Connect. I precedenti archivi `Ignacio-1.0-1.xcarchive` e `Ignacio-1.0-1-StoreAssets.xcarchive` appartengono al vecchio bundle `com.prototype.ignaciomustacho` e precedono i premi: sono storici, non il deliverable corrente. Gli archivi sono ignorati da Git. Nessuna chiave privata o credenziale letta/esportata, nessun dispositivo installato dall’agente.
 

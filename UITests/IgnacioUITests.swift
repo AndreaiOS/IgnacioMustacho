@@ -22,6 +22,9 @@ final class IgnacioUITests: XCTestCase {
         app.buttons["tutorial"].tap()
         XCTAssertTrue(app.buttons["playAgain"].waitForExistence(timeout: 30))
         XCTAssertEqual(app.staticTexts["finalScore"].label, "0")
+        let endingQuote = app.staticTexts["I was saving my best moves. For another game."]
+        XCTAssertTrue(endingQuote.exists)
+        XCTAssertGreaterThan(endingQuote.frame.height, 30, "The written ending must wrap, not truncate to one line")
         capture(app, "GameOver")
         app.buttons["playAgain"].tap()
         XCTAssertTrue(app.buttons["Pause"].exists)
@@ -72,6 +75,54 @@ final class IgnacioUITests: XCTestCase {
         app.buttons["guidePlay"].tap()
         XCTAssertTrue(app.buttons["Pause"].waitForExistence(timeout: 3))
         XCTAssertFalse(app.staticTexts["WARM-UP 1/4"].exists)
+    }
+    @MainActor func testSoundCheckPersistsVoiceChoiceWithoutMutingGameAudio() {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["soundCheck"].tap()
+        let sound = app.switches["gameAudioToggle"]
+        let voice = app.switches["voiceCallsToggle"]
+        XCTAssertTrue(sound.waitForExistence(timeout: 3))
+        if sound.value as? String == "0" { sound.tap() }
+        if voice.value as? String == "1" { voice.tap() }
+        XCTAssertEqual(voice.value as? String, "0")
+        XCTAssertEqual(sound.value as? String, "1")
+        capture(app, "SoundCheck")
+        app.terminate()
+        app.launch()
+        app.buttons["soundCheck"].tap()
+        XCTAssertEqual(app.switches["voiceCallsToggle"].value as? String, "0")
+        XCTAssertEqual(app.switches["gameAudioToggle"].value as? String, "1")
+        app.switches["voiceCallsToggle"].tap()
+        app.buttons["Done"].tap()
+    }
+    @MainActor func testClubRecordsShowLocalAwardsAndReturnHome() {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["clubRecords"].tap()
+        XCTAssertTrue(app.navigationBars["Club records"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["LOCAL CLUB HONOURS"].exists)
+        capture(app, "ClubRecords")
+        app.buttons["Done"].tap()
+        XCTAssertTrue(app.buttons["play"].exists)
+    }
+    @MainActor func testProtectedMilestoneLayout() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--milestone-review"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["TINY FLEX"].exists)
+        XCTAssertTrue(app.buttons["Keep playing"].isHittable)
+        XCTAssertFalse(app.otherElements["courtGestureSurface"].exists)
+        capture(app, "Milestone10")
+    }
+    @MainActor func testFastestPaceKeepsTimingCueAndControlsVisible() {
+        let app = XCUIApplication()
+        app.launchArguments = ["--pace-review"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["PACE 33  /  320 BPM"].exists)
+        XCTAssertTrue(app.staticTexts["timingCue"].exists)
+        XCTAssertTrue(app.buttons["Shoot"].isHittable)
+        capture(app, "Pace320")
     }
     @MainActor func testRewardAnimationSheet() {
         let app = XCUIApplication()

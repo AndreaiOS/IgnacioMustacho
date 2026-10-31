@@ -40,15 +40,44 @@ public struct GameEnding: Equatable, Sendable {
     public let title: String
     public let quip: String
     public let reaction: Reaction
-    public static func forScore(_ score: Int) -> GameEnding {
-        switch score {
+    public static func forScore(_ score: Int, attempt: Int = 0) -> GameEnding {
+        let variant = max(0, attempt) % 3
+        return switch score {
         case ..<10:
-            .init(title: "TACTICAL EXIT.", quip: "I was saving my best moves. For another game.", reaction: .shrug)
+            .init(
+                title: "TACTICAL EXIT.",
+                quip: [
+                    "I was saving my best moves. For another game.", "Excellent warm-up. Unfortunate that it counted.",
+                    "The floor and I had creative differences.",
+                ][variant], reaction: .shrug)
         case ..<33:
-            .init(title: "SCOUTS MISSED IT.", quip: "The talent was here. The scouts were not.", reaction: .flex)
-        case ..<81: .init(title: "BENCH ROYALTY.", quip: "My imaginary contract just got extended.", reaction: .bench)
-        case ..<100: .init(title: "CROWD OF ONE.", quip: "A standing ovation. From me.", reaction: .bow)
-        default: .init(title: "LEGEND, ALLEGEDLY.", quip: "No ball. Somehow, still a legend.", reaction: .triumph)
+            .init(
+                title: "SCOUTS MISSED IT.",
+                quip: [
+                    "The talent was here. The scouts were not.", "My agent is imaginary. His phone is off.",
+                    "I peaked during the introduction.",
+                ][variant], reaction: .flex)
+        case ..<81:
+            .init(
+                title: "BENCH ROYALTY.",
+                quip: [
+                    "My imaginary contract just got extended.", "First name on the bench. That is still a list.",
+                    "My highlight reel includes the warm-up.",
+                ][variant], reaction: .bench)
+        case ..<100:
+            .init(
+                title: "CROWD OF ONE.",
+                quip: [
+                    "A standing ovation. From me.", "All this talent. Absolutely no witnesses.",
+                    "I demand a recount of the applause.",
+                ][variant], reaction: .bow)
+        default:
+            .init(
+                title: "LEGEND, ALLEGEDLY.",
+                quip: [
+                    "No ball. Somehow, still a legend.", "Please retire my imaginary jersey.",
+                    "The hall of fame is currently my hallway.",
+                ][variant], reaction: .triumph)
         }
     }
 }

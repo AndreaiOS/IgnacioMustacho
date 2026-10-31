@@ -75,10 +75,11 @@ import GameKit
         }
         store.save(ledger)
     }
-    func isEarned(_ threshold: Int) -> Bool {
-        guard let id = identifiers[threshold] else { return false }
-        return ledger.progress[id, default: 0] >= 100
+    func percentComplete(_ threshold: Int) -> Double {
+        guard let id = identifiers[threshold] else { return 0 }
+        return ledger.progress[id, default: 0]
     }
+    func isEarned(_ threshold: Int) -> Bool { percentComplete(threshold) >= 100 }
     func flushNow() {
         nextAttempt = 0
         tick()

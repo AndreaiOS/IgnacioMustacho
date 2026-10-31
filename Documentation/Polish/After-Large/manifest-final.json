@@ -1,0 +1,24 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "Gameplay.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Gameplay_0_CC91546E-AD70-410A-928B-B6B5228DBAD1.png",
+        "timestamp": 1793449899.272
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceName": "iPhone 18 Pro Max",
+        "exportedFileName": "GameOver.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "GameOver_0_C5A08BD2-B4DC-41C8-8B48-C408C7C93F2C.png",
+        "timestamp": 1793449898.71
+      }
+    ],
+    "testIdentifier": "IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun()",
+    "testIdentifierURL": "test://com.apple.xcode/Ignacio/IgnacioUITests/IgnacioUITests/testMissesEndRunAndPlayAgainStartsNewRun"
+  }
+]

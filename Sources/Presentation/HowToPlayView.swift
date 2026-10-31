@@ -47,7 +47,9 @@ struct HowToPlayView: View {
                         )
                         .font(.subheadline)
                         Label("Three lives. A wrong move or missed beat costs one.", systemImage: "heart.fill")
-                        Label("The pace picks up every four moves. Keep the rhythm!", systemImage: "speedometer")
+                        Label(
+                            "The pace rises every four commands, up to 320 BPM. Calls come faster and the hit zone tightens.",
+                            systemImage: "speedometer")
                         Text(
                             "Good: 1 point. Perfect: 2. Combo boosts rewards up to ×3. A missed beat resets the combo, not your magnificent moustache."
                         ).font(.subheadline)

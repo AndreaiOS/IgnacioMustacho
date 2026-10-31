@@ -49,7 +49,7 @@ import Testing
         game.advance(to: game.timing.acceptedTimes.upperBound + 0.001)
     }
     #expect(game.beatDuration < initial)
-    #expect(game.beatDuration >= 0.36)
+    #expect(game.beatDuration >= 60.0 / 320)
     #expect(game.lives == 3)
 }
 
@@ -127,8 +127,8 @@ func deadlineWaitsForEntireVisibleWindow(tutorial: Bool) {
         _ = game.perform(game.move, at: game.target)
         game.advance(to: game.timing.acceptedTimes.upperBound + 0.001)
     }
-    #expect(game.timing.halfWindow == 0.28)
-    #expect(abs(game.beatDuration - 0.36) < 0.000001)
+    #expect(game.timing.halfWindow < 0.28)
+    #expect(abs(game.beatDuration - 60.0 / 220) < 0.000001)
 }
 
 @Test func paceBecomesClearlyFasterWithinFirstSixteenCommands() {
@@ -149,4 +149,73 @@ func deadlineWaitsForEntireVisibleWindow(tutorial: Bool) {
         game.advance(to: game.timing.acceptedTimes.upperBound + 0.001)
     }
     #expect(game.timing.validZone.upperBound < 0.98)
+}
+
+@Test func tempoKeepsGrowingFarBeyondOldCeiling() {
+    var game = RhythmGame(tutorial: false)
+    var samples: [Int: Double] = [:]
+    for index in 0...160 {
+        samples[index] = 60 / game.beatDuration
+        if index > 0 && index <= 128 && index % 4 == 0 {
+            #expect(samples[index, default: 0] > samples[index - 4, default: 0])
+        }
+        let previousTarget = game.target
+        game.perform(game.move, at: game.target)
+        game.advance(to: game.timing.acceptedTimes.upperBound + 0.001)
+        #expect(abs(game.target - previousTarget - game.beatDuration * 4) < 0.00001)
+    }
+    for (index, bpm) in [(0, 100.0), (16, 180), (32, 200), (64, 240), (96, 280), (128, 320), (160, 320)] {
+        #expect(abs(samples[index, default: 0] - bpm) < 0.00001)
+    }
+    #expect(game.lives == 3)
+}
+
+@Test func lateGameGesturesFinishAfterVisibleWindowWithoutPenalty() {
+    var game = RhythmGame(tutorial: false)
+    for _ in 0..<128 {
+        game.perform(game.move, at: game.target)
+        game.advance(to: game.timing.acceptedTimes.upperBound + 0.001)
+    }
+    for _ in 0..<12 {
+        let command = game.index
+        let start = game.timing.acceptedTimes.upperBound - 0.001
+        game.beginTouch(at: start)
+        let duration = game.move == .dribble ? 0.2 : 0.44
+        game.advance(to: start + duration)
+        #expect(game.index == command)
+        var gesture = GestureInput(startTime: start, commandID: command)
+        let displacement: (Double, Double) =
+            switch game.move {
+            case .dribble: (0, 0)
+            case .between: (0, 20)
+            case .behind: (-20, 0)
+            case .shoot: (0, -20)
+            }
+        let action = gesture.end(x: displacement.0, y: displacement.1, at: start + duration)
+        #expect(action?.move == game.move)
+        if let action { #expect(game.perform(action.move, at: action.time, commandID: action.commandID) == .good) }
+        game.advance(to: start + duration + 0.001)
+        #expect(game.lives == 3)
+        #expect(game.target - (start + duration + 0.001) >= game.beatDuration * 3 - 0.00001)
+        #expect(game.perform(.shoot, at: game.target, commandID: command) == nil)
+    }
+}
+
+@Test func fastestPaceLeavesRoomForAudioAnimationAndFreshCountdown() {
+    var game = RhythmGame(tutorial: false)
+    for _ in 0..<160 {
+        let timing = game.timing
+        let rate = RhythmTiming.notePlaybackRate(duration: 0.32, beatDuration: game.beatDuration)
+        #expect(0.32 / rate <= game.beatDuration * 0.9 + 0.00001)
+        #expect(rate <= 2)
+        #expect(game.moveAnimationDuration > 0.35)
+        #expect(game.moveAnimationDuration < game.commandInterval - timing.halfWindow * 2)
+        #expect(timing.perfectWindow < timing.halfWindow)
+        game.perform(game.move, at: game.target)
+        game.advance(to: timing.acceptedTimes.upperBound + 0.001)
+        let frozen = game.target - game.beatDuration
+        game.restartCountdown(from: frozen)
+        #expect(abs(game.target - frozen - game.commandInterval) < 0.00001)
+        #expect(!game.resolved)
+    }
 }

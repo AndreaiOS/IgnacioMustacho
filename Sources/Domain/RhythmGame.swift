@@ -35,6 +35,10 @@ public struct RhythmTiming: Sendable {
         let tail = max(beatDuration, halfWindow + 0.12)
         return min(1, max(0, (time - (target - beatDuration * 4)) / (beatDuration * 4 + tail)))
     }
+    /// Leave a small gap between organ notes even at the fastest supported pace.
+    public static func notePlaybackRate(duration: Double, beatDuration: Double) -> Double {
+        min(2, max(1, duration / (beatDuration * 0.9)))
+    }
     public func accepts(_ time: Double) -> Bool { acceptedTimes.contains(time) }
     public func isPerfect(_ time: Double) -> Bool {
         ((target - perfectWindow)...(target + perfectWindow)).contains(time)
@@ -60,12 +64,23 @@ public struct RhythmGame: Sendable {
     public private(set) var lastError: InputError?
     private var touchDeadline: Double?
     public let tutorial: Bool
-    public var beatDuration: Double { tutorial ? 0.85 : max(0.36, 0.6 - Double(index / 4) * 0.06) }
+    /// Four-command stages: a familiar opening, then 28 further increases up to command 129.
+    public var paceLevel: Int { tutorial ? 1 : min(33, index / 4 + 1) }
+    public var beatDuration: Double {
+        guard !tutorial else { return 0.85 }
+        let stage = paceLevel - 1
+        let bpm = stage <= 4 ? 100 + stage * 20 : 180 + (stage - 4) * 5
+        return 60 / Double(bpm)
+    }
+    public var commandInterval: Double { beatDuration * 4 }
+    public var moveAnimationDuration: Double {
+        min(0.85, commandInterval - timing.halfWindow * 2 - 0.04)
+    }
     public var timing: RhythmTiming {
-        RhythmTiming(
-            target: target, beatDuration: beatDuration,
-            halfWindow: tutorial ? 0.5 : max(0.28, 0.4 - Double(index / 8) * 0.02),
-            perfectWindow: tutorial ? 0.18 : 0.14)
+        let halfWindow = tutorial ? 0.5 : min(max(0.28, 0.4 - Double(index / 8) * 0.02), beatDuration * 0.85)
+        return RhythmTiming(
+            target: target, beatDuration: beatDuration, halfWindow: halfWindow,
+            perfectWindow: tutorial ? 0.18 : min(0.14, halfWindow * 0.5))
     }
     public var isAwaitingGesture: Bool { touchDeadline != nil && !resolved }
     public func canAct(at time: Double) -> Bool { !isOver && !resolved && timing.accepts(time) }
